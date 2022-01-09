@@ -113,15 +113,15 @@ $ sudo nano /etc/apache2/sites-avaliable/default-ssl.conf
 Y comprobamos que todo ha ido correcto, insertando _www.midominioseguro.local_ en la caja de búsqueda de nuestro navegador.
 
 
-![midominioseguro1_dig_cert_01.png](../assets/img/midominioseguro1_dig_cert_01.png)
-
-
-
-![midominioseguro1_dig_cert_02.png](../assets/img/midominioseguro1_dig_cert_02.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/midominioseguro1_dig_cert_01.png)
 
 
 
 
-![midominioseguro1_dig_cert_03.png](../assets/img/midominioseguro1_dig_cert_03.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/midominioseguro1_dig_cert_02.png)
+
+
+
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/midominioseguro1_dig_cert_03.png)
 
 
