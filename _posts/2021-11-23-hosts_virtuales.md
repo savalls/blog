@@ -154,11 +154,12 @@ phpinfo();
 
 ---
 
-![dom1_local.png](../assets/img/dom1_local.png)
+![dom1_local.png](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/dom1_local.png)
 
 
 ---
-![Imatge no trobada: ../assets/img/dom2_local.png](../assets/img/dom2_local.png "Imatge no trobada: ../assets/img/dom2_local.png")
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/dom2_local.png)
+
 
 
 
@@ -203,7 +204,8 @@ Seguídamente editaremos nuestro archivo _dominio2.conf_ que se encuentra en /et
 Ahora cuando introducimos la dirección http://www.dominio2.local/wiki, éste es el resultado:
 
 
-![dom2_local_bienvenido_a_la_wiki.png](../assets/img/dom2_local_bienvenido_a_la_wiki.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/dom2_local_bienvenido_a_la_wiki.png)
+
 
 ### Tarea 3.-  Redirect
 
@@ -237,10 +239,12 @@ Este será nuestro documento completo:
 
 Cuando escribamos la dirección http://www.dominio2.local/ieselcaminas indicará que la página se ha movido, mediante un Status Code 3xx (302), que resolverá inmediatamente obteniendo un Status Code 200 y cargando la página referenciada.
 
-![dom2_local_redirect_ieselcaminas.png](../assets/img/dom2_local_redirect_ieselcaminas.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/dom2_local_redirect_ieselcaminas.png)
 
 
-![dom2_status_code_302.png](../assets/img/dom2_status_code_302.png)
+
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/dom2_status_code_302.png)
+
 
 
 
@@ -264,7 +268,8 @@ ErrorDocument 404 "<p><p>Ooops!! <p>Parece que la p&aacutegina que buscas no se 
 Y este es el resultado:
 
 
-![dom2_local_error404.png](../assets/img/dom2_local_error404.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/dom2_local_error404.png)
+
 
 
 
