@@ -39,9 +39,11 @@ Si vuelves a listar ahora _docker images_, verás la nueva versión que se ha cr
 
 Y ya finalmente, solo te queda ejecutar docker push **nombre\_de\_usuario/nombre\_del\_repositorio:etiqueta**
 
-![docker_push_chapter2.png](../assets/img/docker_push_chapter2.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/docker_push_chapter2.png?raw=true)
+
+
 
 Si ahora navegas hasta tu cuenta en dockerhub y revisas tu repositorio, podrás comprobar que la imagen se encuentra lista para ser instalada en otro container.
 
-![dockerhub_chapter2.png](../assets/img/dockerhub_chapter2.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/dockerhub_chapter2.png?raw=true)
 
