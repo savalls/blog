@@ -25,26 +25,30 @@ $ sudo adduser usuario docker
 ```
 
  
-- [ ] Ahora ya es hora de volver al directorio donde has alojado el directorio _P1_.  Si observas el _Dockerfile_ comprobarás que partirá de una imagen de _debian_, que construirá la imagen si no encuentra la imagen previamente.
+Ahora ya es hora de volver al directorio donde has alojado el directorio _P1_.  Si observas el _Dockerfile_ comprobarás que partirá de una imagen de _debian_, que construirá la imagen si no encuentra la imagen previamente.
+
 ```bash
 # we will inherit from  the Debian image on DockerHub
 FROM debian
 ```
 
-- [ ] En el siguiente paso, configurará la zona horaria que le hemos indicado, _Europe/Madrid_.
- ```bash
+En el siguiente paso, configurará la zona horaria que le hemos indicado, _Europe/Madrid_.
+
+```bash
 # set timezone so files' timestamps are correct
 ENV TZ=Europe/Madrid     
 ```    
 
-- [ ] Actualizará los repositorios e instalará Apache y PHP 7.4
+Actualizará los repositorios e instalará Apache y PHP 7.4
+
 ```bash
 # install apache and php 7.4
 # we include procps and telnet so you can use these with shell.sh prompt
 RUN apt-get update -qq >/dev/null && apt-get install -y -qq procps telnet apache2 php7.4 -qq >/dev/null
 ```
 
-- [ ] Creará la infraestructura de archivos necesaria para alojar los contenidos de la web " . " en _/var/www/html_ y escribirá su estado en _/data_.  Para ello, estableceremos los permisos necesarios a _www-data_.
+Creará la infraestructura de archivos necesaria para alojar los contenidos de la web " . " en _/var/www/html_ y escribirá su estado en _/data_.  Para ello, estableceremos los permisos necesarios a _www-data_.
+
 ```bash
 # HTML server directory
 WORKDIR /var/www/html
@@ -59,7 +63,8 @@ COPY php.conf /etc/apache2/mods-available/php7.4.conf
 
 ```
 
-- [ ] Finalmente, se registrará el _virtualhost_, y saldrá a una consola de texto.
+Finalmente, se registrará el _virtualhost_, y saldrá a una consola de texto.
+
 ```bash
 # enable userdir and php
 RUN a2enmod php7.4
@@ -68,3 +73,5 @@ RUN a2enmod php7.4
 CMD  ["./entrypoint.sh"]
 ```
 
+
+Para probar tu contenedor, harás uso
