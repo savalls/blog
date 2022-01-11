@@ -12,9 +12,10 @@ title: Práctica Dockerhub
 
 En esta práctica aprenderás a crear imágenes de tus containers y a subirlos a un repositorio para que las tengas siempre disponibles.
 
-El primer paso será crear una cuenta en [Dockerhub](https://hub.docker.com/), y posteriormente te logueas en
+El primer paso será crear una cuenta en [Dockerhub](https://hub.docker.com/).
 
 ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/dockerhub_portada.png?raw=true)
+
 
 
 
