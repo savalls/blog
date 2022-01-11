@@ -14,7 +14,8 @@ En esta práctica aprenderás a crear imágenes de tus containers y a subirlos a
 
 El primer paso será crear una cuenta en [Dockerhub](https://hub.docker.com/), y posteriormente te logueas en
 
-![2021-12-15_dockerhub_portada.png](../assets/img/2021-12-15_dockerhub_portada.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/dockerhub_portada.png?raw=true)
+
 
 
 Ahora desde una consola de texto te logueas dentro de la cuenta que acabas de crear
