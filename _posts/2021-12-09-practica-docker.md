@@ -12,11 +12,11 @@ title: Practica Docker
 
 Para ejecutar ésta práctica, clonaremos el directorio remoto   [https://github.com/victorponz/docker/tree/master/P1](https://github.com/victorponz/docker/tree/master/P1)  a una carpeta de nuestro equipo y podremos examinar los diferentes archivos _.sh_ que se compone, y que determinarán la ejecución de la misma.
 
-Antes de esto, nos aseguraremos que tenenos instalado _docker.io_ en nuestro equipo, por lo que instalaremos _docker_
+Antes de esto, nos aseguraremos que tenenos instalado _docker_ en nuestro equipo, por lo que comprobaremos la salida de _docker ps:
 
-```bash
-$ sudo apt install docker.io -y
-```
+![docker_ps_salida.png](../assets/img/docker_ps_salida.png)
+
+Seguiremos las indicaciones del proceso descrito en este [proceso de instalación en ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
 Una vez instalado,  nuestro usuario debe pertenecer al grupo _docker_ para poder ejecutar comandos sin recurrir al usuario root, dado que podría suponer un problema de vulnerabilidad grave, por lo que que añades a tu _usuario_ en el grupo __docker__.
 
@@ -24,6 +24,7 @@ Una vez instalado,  nuestro usuario debe pertenecer al grupo _docker_ para poder
 $ sudo adduser usuario docker
 ```
 
+### Construcción del Contenedor.
  
 Ahora ya es hora de volver al directorio donde has alojado el directorio _P1_.  Si observas el _Dockerfile_ comprobarás que partirá de una imagen de _debian_, que construirá la imagen si no encuentra la imagen previamente.
 
@@ -73,5 +74,15 @@ RUN a2enmod php7.4
 CMD  ["./entrypoint.sh"]
 ```
 
+### Ejecución del contenedor
 
-Para probar tu contenedor, harás uso
+Después de analizar el archivo _Dockerfile_ es hora de construir tuimagen y probar que funciona.   Para ello, lanzarás el script _build.sh_ que leerá el archivo para su construcción, y _debug.sh_ que es quien lo mantendrá activo en primer plano, y accederemos en la dirección
+_localhost:8086/public_html_
+
+![docker_contador_debug.png](../assets/img/docker_contador_debug.png)
+
+
+
+
+
+
