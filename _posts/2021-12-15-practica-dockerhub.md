@@ -2,7 +2,7 @@
 layout: post
 categories: 
 conToc: true
-title: Practica Dockerhub
+title: Práctica Dockerhub
 ---
 
 
@@ -23,7 +23,8 @@ $ docker login
 ```
 Ejecutas _*docker images*_, y podrás comprobar el nombre de los repositorios que estarán listados en la columna __REPOSITORY__ 
 
-![2021-12-15_docker_images.png](../assets/img/2021-12-15_docker_images.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/docker_images.png?raw=true)
+
 
 
 Seguídamente tendrás que preparar la nomenclatura de la imagen que vas a subir, de la siguiente manera **nombre\_de\_usuario/nombre\_del\_repositorio:etiqueta** y generas un tag de la imagen referida para nombrarla.
@@ -34,4 +35,8 @@ docker tag chapter2 savalls/chapter2:v1
 
 Si vuelves a listar ahora _docker images_, verás la nueva versión que se ha creado
 
-![2021-12-15_docker_images2.png](../assets/img/2021-12-15_docker_images2.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/docker_images2.png?raw=true)
+
+
+
+
