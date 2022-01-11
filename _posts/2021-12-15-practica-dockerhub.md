@@ -41,5 +41,7 @@ Y ya finalmente, solo te queda ejecutar docker push **nombre\_de\_usuario/nombre
 
 ![docker_push_chapter2.png](../assets/img/docker_push_chapter2.png)
 
+Si ahora navegas hasta tu cuenta en dockerhub y revisas tu repositorio, podrás comprobar que la imagen se encuentra lista para ser instalada en otro container.
 
+![dockerhub_chapter2.png](../assets/img/dockerhub_chapter2.png)
 
