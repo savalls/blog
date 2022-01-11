@@ -14,7 +14,8 @@ Para ejecutar ésta práctica, clonaremos el directorio remoto   [https://github
 
 Antes de esto, nos aseguraremos que tenenos instalado _docker_ en nuestro equipo, por lo que comprobaremos la salida de _docker ps:
 
-![docker_ps_salida.png](../assets/img/docker_ps_salida.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/docker_ps_salida.png)
+
 
 Seguiremos las indicaciones del proceso descrito en este [proceso de instalación en ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
@@ -79,7 +80,8 @@ CMD  ["./entrypoint.sh"]
 Después de analizar el archivo _Dockerfile_ es hora de construir tuimagen y probar que funciona.   Para ello, lanzarás el script _build.sh_ que leerá el archivo para su construcción, y _debug.sh_ que es quien lo mantendrá activo en primer plano, y accederemos en la dirección
 _localhost:8086/public_html_
 
-![docker_contador_debug.png](../assets/img/docker_contador_debug.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/docker_contador_debug.png)
+
 
 
 
