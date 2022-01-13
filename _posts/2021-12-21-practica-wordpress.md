@@ -72,10 +72,12 @@ Si ananlizas el código verás que antes de proceder a instalar Wordpress como t
 
 Ejecutaremos _docker-compose up -d_ que se encargará de extraer las imágenes necesarias e iniciar los contenedores de base de datos y Wordpress.
 
- ![docker_compose_up_d.png](../assets/img/docker_compose_up_d.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/docker_compose_up_d.png)
+
  
  
  Y para acceder a la instalación de Wordpress accedes, mediante un navegador, a tu dirección local en el puerto 8000. 
  
- ![wordpress_instalacion.png](../assets/img/wordpress_instalacion.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/wordpress_instalacion.png)
+
  
