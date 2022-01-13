@@ -93,5 +93,7 @@ Con esto, crearemos nuestra imagen en un contenedor que será accesible mediante
 $ docker run --rm -d -p 8080:80 --name web webserver
 ```
 
+
+
 ![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/docker_run_webserver.png)
 
