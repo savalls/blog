@@ -18,7 +18,8 @@ En esta práctica vamos a instalar un contenedor docker que contendrá un [servi
 Para ello, ingresarás dentro de tu cuenta de [Dockerhub](https://hub.docker.com/) y puedes encontrar la imagen oficial del proyecto.
 
 
-![nginx_official_docker_image.png](../assets/img/nginx_official_docker_image.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/nginx_official_docker_image.png)
+
 
 
 Ahora tan facil como dirigirte a  un terminal y teclear lo siguiente:
@@ -27,10 +28,12 @@ $ docker run --rm -d -p 8080:80 --name web nginx
 ```
 Ahora docker se encargará de comprobar si existe la imagen en el sistema, instalará los archivos necesarios, ejecutará el contenedor como demonio (-d) y mapeará el puerto 80 de nuestro huesped en el puerto 8080 de nuestro host. (8080:80)
 
-![docker_run_nginx_latest.png](../assets/img/docker_run_nginx_latest.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/docker_run_nginx_latest.png)
+
 
 Y éste será el resultado, que has desplegado en menos de cinco minutos
-![nginx_base_localhost.png](../assets/img/nginx_base_localhost.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/nginx_base_localhost.png)
+
 
 
 ### Agregar HTML personalizado
@@ -63,7 +66,8 @@ Ya tienes lista la estructura básica del contenedor, y ahora vincularás esta e
 ```
 
 
-![nginx_hola01.png](../assets/img/nginx_hola01.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/nginx_hola01.png)
+
 
 
 ### Crear imagen personalizada
@@ -89,4 +93,5 @@ Con esto, crearemos nuestra imagen en un contenedor que será accesible mediante
 $ docker run --rm -d -p 8080:80 --name web webserver
 ```
 
-![docker_run_webserver.png](../assets/img/docker_run_webserver.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/docker_run_webserver.png)
+
