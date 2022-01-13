@@ -83,7 +83,7 @@ $ sudo docker-compose run web django-admin startproject composeexample .
 Si ahora listas el directorio observarás que algunas carpetas son propiedad de  root
 
 
-![django_list_the_contents.png](../assets/img/django_list_the_contents.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/django_list_the_contents.png)
 
 
 Para evitar problemas ejecutaremos
@@ -108,13 +108,16 @@ DATABASES = {
 }
 ```
 
-![django_import_os_DATABASES.png](../assets/img/django_import_os_DATABASES.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/django_import_os_DATABASES.png)
+
 
 Es hora de ejecutar docker-compose -d y comprobar el resultado en el puerto 8000 de tu ip local
 
-![django_compose_up.png](../assets/img/django_compose_up.png)
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/django_compose_up.png)
 
 
-![django_localhost_8000.png](../assets/img/django_localhost_8000.png)
+
+![](https://raw.githubusercontent.com/savalls/savalls.github.io/main/assets/img/django_localhost_8000.png)
+
 
  
