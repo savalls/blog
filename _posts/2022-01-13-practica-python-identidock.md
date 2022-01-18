@@ -13,7 +13,7 @@ title: Práctica Python Identidock
 
 Para la ejecución de la siguiente práctica vamos a crear varias ramas del mismo  (_branches_) y versiones (_tags_) de un repositorio, que ejecuta un container que genera imágenes aleatorias pixeladas.
 
-###  Primera rama - Hello World!!
+###  Rama principal - Hello World!!
 
 
 En primer lugar tienes que crear un repositorio nuevo y clonarlo dentro de un directorio de tu máquina local, por ejemplo https://github.com/tu_usuario/identidock.
@@ -61,5 +61,42 @@ Verás que construye la imagen de un container a la que le realizarás la siguie
 $ cul localhost:5000
 ```
 
-![curl_localhost_5k_01.png](../assets/img/curl_localhost_5k_01.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/curl_localhost_5k_01.png?raw=true)
+
+
+Ahora modificarás el código para que no haya que estar reiniciando el contendor cada vez que cambiemos el código, donde el argumento _-v $(pwd)/app:/app_ trasladará la carpeta app de nuestro host al directorio app del container montado.
+  _*Nota: Fíjate  que los nombres de los directorios deben coincidir con los directorios que  hemos indicado en el archivo Dockerfile_
+
+```bash
+$     docker run -d -p 5000:5000 -v "$(pwd)"/app:/app identidock
+```    
+     
+Si vuelves a realizar la petición _$ curl localhost:5000_ obtendrás el mismo resultado.
+
+Ahora necesitarás para el contenedor, por lo que detendrá el último (_-lq_) que hemos utilizado mediante la siguiente linea.
+
+```bash
+$ docker stop $(docker ps -lq)
+$ docker rm $(docker ps -lq)
+```
+
+
+   Ahora modificarás tu archivo _identidock_ para mostrar un contenido ligeramente diferente:
+   
+   ```bash
+    from flask import Flask
+    app = Flask(__name__)
+    
+    @app.route('/')
+    def hello_world():
+        return 'Hello World from Ciberseguridad!\n'
+    
+    if __name__ == '__main__':
+        app.run(debug=True, host='0.0.0.0')
+```
+   
+   
+ Ahora si ejecutas de nuevo el contenedor y realizas la peticion curl al puerto 5000 de localhost, verás esto:
+
+![curl_localhost_5k_02.png](../assets/img/curl_localhost_5k_02.png)
 
