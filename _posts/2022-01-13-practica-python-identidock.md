@@ -148,7 +148,7 @@ Modifica el fichero _identidock.py_ con el siguiente código:
 
 Ahora volverás a crear el contenedor con la nueva aplicación, y se verá así:
 
-![identicon_01.png](../assets/img/identicon_01.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/identicon_01.png?raw=true)
 
 *Recuerda que para ejecutar la nueva aplicacion, debes detener y borrar el container anteriomente creado.
 
