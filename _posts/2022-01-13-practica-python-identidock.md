@@ -98,5 +98,5 @@ $ docker rm $(docker ps -lq)
    
  Ahora si ejecutas de nuevo el contenedor y realizas la peticion curl al puerto 5000 de localhost, verás esto:
 
-![curl_localhost_5k_02.png](../assets/img/curl_localhost_5k_02.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/curl_localhost_5k_02.png?raw=true "")
 
