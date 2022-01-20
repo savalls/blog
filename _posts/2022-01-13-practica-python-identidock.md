@@ -73,7 +73,7 @@ $     docker run -d -p 5000:5000 -v "$(pwd)"/app:/app identidock
      
 Si vuelves a realizar la petición _$ curl localhost:5000_ obtendrás el mismo resultado.
 
-Ahora necesitarás para el contenedor, por lo que detendrá el último (_-lq_) que hemos utilizado mediante la siguiente linea.
+Ahora necesitarás parar y borrar el contenedor, por lo que detendrá el último (_-lq_) que hemos utilizado mediante las siguientes lineas.
 
 ```bash
 $ docker stop $(docker ps -lq)
@@ -100,5 +100,11 @@ $ docker rm $(docker ps -lq)
 
 ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/curl_localhost_5k_02.png?raw=true)
 
+
+Ahora vas a guardar un tag de esta versión.  Para ello:
+    1. Crea un commit con el mensaje de la version v1.
+    2. Harás un push del commit creado.
+    3. Crea un tag con el comando _git tag v1_
+    4. Haz _git push origin v1_
 
 
