@@ -80,6 +80,20 @@ Al instalar los paquetes listados en el archivo _requirements.txt_, se instalar�
 $ pip list
 ```
 
+### Ejecución de la aplicación en local
+
+
+En un par de pasos tendrás tu aplicación lista para ejecutarla en local, pero antes Django usa activos locales (_assets_), por lo que hay que ejecutar _collestatic_ y seguídamente _heroku local_:
+
+```bash
+$ python3 manage.py collecstatic
+$ heroku local
+```
+
+Ya puedes abrir un navegador en la dirección _http://localhost:5000_ para comprobar el resultado.
+
+### Subir cambios locales
+
 
 
 
