@@ -65,6 +65,25 @@ Y se activa mediante
 $ source venv/bin/activate
 ```
 
+Ahora para instalarla con _pip_ y el paquete para la conexión mediante Postgres, que  primero deberás instalarl, también, desde tu gestor de paquetes. En Debian, por ejemplo
+```bash
+$ sudo apt-get install python3-pip libpq-dev
+```
+
+Y ahora, sí, puedes instalar las dependencias del entorno virtual
+```bash
+$ pip install -r requirements.txt
+```
+
+Al instalar los paquetes listados en el archivo _requirements.txt_, se instalarán otros paquetes que crean las dependecias, y que podrás listar en tu consola mediante
+```bash
+$ pip list
+```
+
+
+
+
+
 
 
 
