@@ -18,26 +18,30 @@ title: Tarea Dependency Track OWASP
 
 1.  Instala Dependency Track
 
-| ![2022-02-22_17-00_dependencyTrack001.png](../assets/img/2022-02-22_17-00_dependencyTrack001.png)  |
+| ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack001.png?raw=true) |
+
 
 
 2.  Crea un proyecto
 
-|  ![2022-02-22_17-00_dependencyTrack_newProject002.png](../assets/img/2022-02-22_17-00_dependencyTrack_newProject002.png) |
+|  ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack_newProject002.png?raw=true) |
+
 
 3.  Carga uno de los ejemplos de SBOM desde la url del repositorio de GitHub proporcionado
 
-|  ![2022-02-22_17-00_dependencyTrack_sbomUpload003.png](../assets/img/2022-02-22_17-00_dependencyTrack_sbomUpload003.png) |
-|  ![2022-02-22_17-00_dependencyTrack_sbomUpload004.png](../assets/img/2022-02-22_17-00_dependencyTrack_sbomUpload004.png) |
+|  ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack_sbomUpload003.png?raw=true) |
+|  ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack_sbomUpload004.png?raw=true) |
+
 
  4.  Ordena las vulnerabilidades de mayor a menor |
 
 
-|                      ![2022-02-22_17-00_dependencyTrack_RiskScore005.png](../assets/img/2022-02-22_17-00_dependencyTrack_RiskScore005.png)                            |
+|                      ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack_RiskScore005.png?raw=true)                           |
 
 
 5.  Muestra información de la misma
 
-| ![2022-02-22_17-00_dependencyTrack_Info006.png](../assets/img/2022-02-22_17-00_dependencyTrack_Info006.png)  |
+| ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack_Info006.png?raw=true)  |
+
 
 
