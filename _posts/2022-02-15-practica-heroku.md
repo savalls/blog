@@ -95,12 +95,42 @@ Ya puedes abrir un navegador en la dirección _http://localhost:5000_ para compr
 ### Subir cambios locales
 
 
+Para realizar cambios, hay que modificar el archivo _requierements.txt_ por lo que añadirás _requests_ a la lista,
+```bash
+    django
+    gunicorn
+    django-heroku
+    requests
+```
+y actualizarás las dependencias
+```bash
+pip install -r requirements.txt
+```
+Modificamos el archivo _hello/views.py_ para que importe desde el principio:
+
+```bash
+import requets
+``` 
+e index de la siguiente forma:
+
+```bash
+    def index(request):
+        r = requests.get('https://httpbin.org/status/418')
+        return HttpResponse('<pre>' + r.text + '</pre>')
+```
+
+y cuando lance la aplicación en local, podrás comprobar el resultado en la dirección
+_localhost:5000:
+
+```bash
+$ heroku local
+```
 
 
 
 
 
-
+### Aprovisionamiento de una base de datos
 
 
 
