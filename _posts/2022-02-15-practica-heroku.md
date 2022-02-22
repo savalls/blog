@@ -127,11 +127,14 @@ $ heroku local
 ```
 
 
+![2022-02-17_heroku_tpot_localhost.png](../assets/img/2022-02-17_heroku_tpot_localhost.png)
 
 
 
 ### Aprovisionamiento de una base de datos
 
+Podrás comprobar los complementos instalados mediante el comando _heroku addons_
 
+![2022-02-22_heroku_addons01.png](../assets/img/2022-02-22_heroku_addons01.png)
 
 
