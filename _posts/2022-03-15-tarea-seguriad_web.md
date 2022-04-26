@@ -446,14 +446,19 @@ file_put_contents($fichero, $session_robada, FILE_APPEND);
  
  Ejecuta el script  build.sh para la construcción de la imagen, y run.sh de la carpeta víctima para que se ejecute el contenedor.
  
- $ ./build.sh ![20220426_seg_web_vict_build.png](../assets/img/20220426_seg_web_vict_build.png)
+ $ ./build.sh
+ ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220426_seg_web_vict_build.png?raw=true)
  
- $ ./run.sh ![20220426_seg_web_vict_run.png](../assets/img/20220426_seg_web_vict_run.png)
-  
+ $ ./run.sh
+ ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220426_seg_web_vict_run.png?raw=true)
+ 
+ 
  Ahora puedes abrir tu navegador y apuntar hacia 
  http://localhost:8081/public_html y hacia http://localhost:8081/public_html/post.php para abrir una caja de texto 
  
-![2022-03-29_16-40_victima_cajatexto001.png](../assets/img/2022-03-29_16-40_victima_cajatexto001.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-03-29_16-40_victima_cajatexto001.png?raw=true)
+
+
 
 
 
