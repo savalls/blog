@@ -2,13 +2,13 @@
 layout: post
 categories: 
 conToc: true
-title: Tarea Dependency Track OWASP
+title: Tarea K
 ---
 
 
 
 
-# Tarea Dependency Track OWASP
+# Tarea Kubernetes
 
 
 
@@ -41,4 +41,7 @@ title: Tarea Dependency Track OWASP
 
 5.  Muestra información de la misma
 
-| ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyT
+| ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-02-22_17-00_dependencyTrack_Info006.png?raw=true)  |
+
+
+

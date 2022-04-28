@@ -453,12 +453,23 @@ file_put_contents($fichero, $session_robada, FILE_APPEND);
  ![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220426_seg_web_vict_run.png?raw=true)
  
  
- Ahora puedes abrir tu navegador y apuntar hacia 
- http://localhost:8081/public_html y hacia http://localhost:8081/public_html/post.php para abrir una caja de texto 
  
-![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-03-29_16-40_victima_cajatexto001.png?raw=true)
+Realiza la misma acción desde la carpeta _atacante_ con los scripts _build.sh_ y _persist.sh_
+![20220426_seg_web_atac_build.png](../assets/img/20220426_seg_web_atac_build.png)
+
+ 
+ 
+ Puedes comprobar que las imágenes están corriendo ejecutnado $ docker ps -a ![20220427_docker_ps-a_vict-atac.png](../assets/img/20220427_docker_ps-a_vict-atac.png)
+ 
+ 
+ 
+ Ahora puedes abrir tu navegador y apuntar hacia  http://localhost:8081/public_html/login.php para validar un nombre de usuario y una contraseña.
+ 
+![2022-04-27_validacion_victima.png](../assets/img/2022-04-27_validacion_victima.png)
+
+En el siguiente paso, visita la dirección http://localhost:8081/public_html/hackeada.php
+![2022-04-27_hackeada_victima.png](../assets/img/2022-04-27_hackeada_victima.png)
 
 
 
-
-
+Ahora, abre el archivo sessions.txt, que lo encontrarás en /var 
