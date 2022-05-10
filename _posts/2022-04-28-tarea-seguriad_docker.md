@@ -130,8 +130,8 @@ $ curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | s
 
 ![20220510_01grype_install.png](../assets/img/20220510_01grype_install.png)
 
+Ahora solo tienes que indicarle la imagen docker que quieres evaluar, de cualquier que tengas en funcionamiento.  Lo puedes consultar mediante _docker ps -a_
 
-    Ahora solo tienes que indicarle la imagen docker que quieres evaluar, de cualquier que tengas en funcionamiento.  Lo puedes consultar mediante _docker ps -a_
 
 ```bash
 $ grype image_docker
