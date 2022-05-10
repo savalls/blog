@@ -117,4 +117,26 @@ $ syft dependencytrack/frontend
 ```
 ![20220505_syft_dependencytrack_frontend.png](../assets/img/20220505_syft_dependencytrack_frontend.png)
 
-El mismo proceso para 
+
+—
+
+Una vez hemos escaneado el container con syft para conocer su composición, vamos a seguir el mismo procedimiento para escanear elcontenido, esta vez con [grype](https://github.com/anchore/grype) 
+
+Para ello en primer lugar hay que instalar la utilidad en nuestro sistema, siguiendo las indicaciones desde su página web.
+
+```bash
+$ curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
+```
+
+![20220510_01grype_install.png](../assets/img/20220510_01grype_install.png)
+
+
+    Ahora solo tienes que indicarle la imagen docker que quieres evaluar, de cualquier que tengas en funcionamiento.  Lo puedes consultar mediante _docker ps -a_
+
+```bash
+$ grype image_docker
+```
+
+![20220510_02grype_image.png](../assets/img/20220510_02grype_image.png)
+
+
