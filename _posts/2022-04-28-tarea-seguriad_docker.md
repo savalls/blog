@@ -38,7 +38,9 @@ $ docker build . -t vulnerable-app
 $ docker run -p 8080:8080 --name vulnerable-app --rm vulnerable-app
 ```
 
-![2022-04-28_001_seg_docker_run.png](../assets/img/2022-04-28_001_seg_docker_run.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-04-28_001_seg_docker_run.png?raw=true)
+
+
 
 
 
@@ -49,7 +51,8 @@ $ trivy vulnerable-app
 
 y te mostrará el conjunto de vulnerabilidades a la que puede verse sometida la imagen de docker.
 
-![2022-04-28_002_seg_docker_trivy.png](../assets/img/2022-04-28_002_seg_docker_trivy.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/2022-04-28_002_seg_docker_trivy.png?raw=true)
+
 
 
 
@@ -62,14 +65,16 @@ A día de hoy, la versión más reciente Wordpress se encuentra en una versión 
 ```bash
 $ docker search wordpress-4
 ```
-![20220505_docker_search_wordpress2.png](../assets/img/20220505_docker_search_wordpress2.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_docker_search_wordpress2.png?raw=true)
+
 
 Ahora realiza un docker pull para bajar la imagen propuesta
 ```bash
 $ docker pull vsplate/wordpress-4.6
 ```
 
-![20220505_docker_pull_wordpress-4.6.png](../assets/img/20220505_docker_pull_wordpress-4.6.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_docker_pull_wordpress-4.6.png?raw=true)
+
 
 
 Y ahora escanea la imagen con trivy
@@ -78,7 +83,7 @@ $ trivy image vsplate/wordpress-4.6
 ```
 Este será el resultado del escaneo propuesto
 
-![20220505_trivy_image_wordpress-4.6.png](../assets/img/20220505_trivy_image_wordpress-4.6.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_trivy_image_wordpress-4.6.png?raw=true)
 
 
 #### C.-  Testeo con DependencyTrack a partir del BOM generado con [Syft](https://github.com/anchore/syft/), y con [Grype](https://github.com/anchore/grype/).
@@ -95,7 +100,7 @@ $ curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | su
 
 
 Como puedes observar, una vez introducido la clave de administrador, quedará listo.
-![20220505_syft_install.png](../assets/img/20220505_syft_install.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_syft_install.png?raw=true)
 
 Ahora bájate la imagen de [DependyTrack](https://dependencytrack.org/) que encontrarás  en su apartado Download, en un directorio que habrás creado previamente
 
@@ -104,18 +109,19 @@ $ curl -LO https://dependencytrack.org/docker-compose.yml
 $ docker-compose up -d
 ```
 
-![20220505_docker_compose_dependency_track.png](../assets/img/20220505_docker_compose_dependency_track.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_docker_compose_dependency_track.png?raw=true)
 
 
 Ahora realiza un _docker ps -a_ para comprobar las imagenes que se han creado
-![20220505_docker_ps_dependency_track.png](../assets/img/20220505_docker_ps_dependency_track.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_docker_ps_dependency_track.png?raw=true)
+
 
 
 Ya solo queda invocar el comando syft con el nombre de la imagen como parámetro
 ```bash
 $ syft dependencytrack/frontend
 ```
-![20220505_syft_dependencytrack_frontend.png](../assets/img/20220505_syft_dependencytrack_frontend.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220505_syft_dependencytrack_frontend.png?raw=true)
 
 
 —
@@ -128,7 +134,7 @@ Para ello en primer lugar hay que instalar la utilidad en nuestro sistema, sigui
 $ curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
 ```
 
-![20220510_01grype_install.png](../assets/img/20220510_01grype_install.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220510_01grype_install.png?raw=true)
 
 Ahora solo tienes que indicarle la imagen docker que quieres evaluar, de cualquier que tengas en funcionamiento.  Lo puedes consultar mediante _docker ps -a_
 
@@ -137,6 +143,6 @@ Ahora solo tienes que indicarle la imagen docker que quieres evaluar, de cualqui
 $ grype image_docker
 ```
 
-![20220510_02grype_image.png](../assets/img/20220510_02grype_image.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/20220510_02grype_image.png?raw=true)
 
 
