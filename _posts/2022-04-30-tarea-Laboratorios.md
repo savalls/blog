@@ -43,7 +43,7 @@ En este caso, vamos a probar algunos nombres de usuario para validarnos.  Introd
 Para averiguar el número de columnas hay que añadir la secuéncia '+UNION+SELECT+ seguida de tantos NULL, como columnas tenga la tabla.  No olvides incluir el comentario – tras el último NULL.     ___+UNION+SELECT+NULL,NULL,NULL--___
 
 
-![lab_03.png](../assets/img/lab_03.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_03.png?raw=true)
 
 
 
