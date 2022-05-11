@@ -2,44 +2,62 @@
 layout: post
 categories: 
 conToc: true
-title: Tarea SQL Injection
+title: Tarea SQL Injection - Laboratorios
 ---
 
 
 
-# Tarea SQL Injection
-
-
-En la siguiente tarea vas a descargar el siguiente [repositorio](https://github.com/christophetd/log4shell-vulnerable-app)[ ](https://github.com/christophetd/log4shell-vulnerable-app.git)de github, de una aplicación que contiene la vulnerabilidad [log4shell](https://www.cvedetails.com/cve/CVE-2022-23307/), y que después escanearás con [trivy](https://aquasecurity.github.io/trivy/v0.25.3/).
-
-Para instalar trivy, sigue las indicaciones desde su [apartado](https://aquasecurity.github.io/trivy/v0.25.3/getting-started/installation/ ) para tu distribución.
-
-Una vez clonado el repositorio mediante
-```bash
-$ git clone https://github.com/christophetd/log4shell-vulnerable-app.git
-
-```
-deberás generar la imagen con
-```
-$ docker build . -t vulnerable-app
-```
-y seguídamente, deberás realizar un _$ docker run_ 
-```bash
-$ docker run -p 8080:8080 --name vulnerable-app --rm vulnerable-app
-```
-
-![2022-04-28_001_seg_docker_run.png](../assets/img/2022-04-28_001_seg_docker_run.png)
+# Tarea SQL Injection - Laboratorios
 
 
 
-Ahora debes correr el aplicativo trivy y como parámetro el nombre de la imagen que quieres examinar
-```bash
-$ trivy vulnerable-app
-```
 
-y te mostrará el conjunto de vulnerabilidades a la que puede verse sometida la imagen de docker.
+### Lab 1.  [Vulnerabilidad de inyección SQL en la cláusula WHERE que permite la recuperación de datos ocultos](https://portswigger.net/web-security/sql-injection/lab-retrieve-hidden-data)
 
-![2022-04-28_002_seg_docker_trivy.png](../assets/img/2022-04-28_002_seg_docker_trivy.png)
 
+Añadimos 'OR+1=1– al final de la secuencia.   Se puede añadir directamente, o bien mediante el uso de burpsuite, que tiene la comodidad que introduce el formato adecuado. 
+
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_01.png?raw=true)
+
+
+
+
+
+### Lab 2.  [Vulnerabilidad de inyección SQL que permite eludir el inicio de sesión](https://portswigger.net/web-security/sql-injection/lab-login-bypass)
+
+
+En este caso, vamos a probar algunos nombres de usuario para validarnos.  Introducimos en la caja de texto el nombre junto con el comentario, y una secuencia aleatoria en la caja de texto de la contraseña.    ___administrator'-- : asdfas___
+
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_02A.png?raw=true)
+
+
+
+
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_02B.png?raw=true)
+
+
+
+### Lab 3.  [Ataque UNION de inyección SQL, determinando el número de columnas devueltas por la consulta](https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns)
+
+
+Para averiguar el número de columnas hay que añadir la secuéncia '+UNION+SELECT+ seguida de tantos NULL, como columnas tenga la tabla.  No olvides incluir el comentario – tras el último NULL.     ___+UNION+SELECT+NULL,NULL,NULL--___
+
+
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_03.png?raw=true)
+
+
+
+### Lab 4.  [Averigua la versión de la base de datos mediante un ataque de UNION](https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-oracle)
+
+En este laboratorio, hay que ir probando qué secuencia es la que reconoce el servidor y devuelve un código de respuesta 200.
+
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_04A.png?raw=true)
+
+Para ello, elige antes una categoría de la página web e inyecta el código a continuación junto al comentario final.
+
+___+UNION+SELECT+BANNER,+NULL+FROM+v$version___
+
+
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_04B.png?raw=true)
 
 
