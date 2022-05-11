@@ -17,7 +17,7 @@ title: Tarea Laboratorios
 
 Añadimos 'OR+1=1– al final de la secuencia.   Se puede añadir directamente, o bien mediante el uso de burpsuite, que tiene la comodidad que introduce el formato adecuado. 
 
-![lab_01.png](../assets/img/lab_01.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_01.png?raw=true)
 
 
 
@@ -28,12 +28,12 @@ Añadimos 'OR+1=1– al final de la secuencia.   Se puede añadir directamente, 
 
 En este caso, vamos a probar algunos nombres de usuario para validarnos.  Introducimos en la caja de texto el nombre junto con el comentario, y una secuencia aleatoria en la caja de texto de la contraseña.    ___administrator'-- : asdfas___
 
-![lab_02A.png](../assets/img/lab_02A.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_02A.png?raw=true)
 
 
 
 
-![lab_02B.png](../assets/img/lab_02B.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_02B.png?raw=true)
 
 
 
@@ -43,6 +43,7 @@ En este caso, vamos a probar algunos nombres de usuario para validarnos.  Introd
 Para averiguar el número de columnas hay que añadir la secuéncia '+UNION+SELECT+ seguida de tantos NULL, como columnas tenga la tabla.  No olvides incluir el comentario – tras el último NULL.     ___+UNION+SELECT+NULL,NULL,NULL--___
 
 
+![lab_03.png](../assets/img/lab_03.png)
 
 
 
@@ -50,11 +51,11 @@ Para averiguar el número de columnas hay que añadir la secuéncia '+UNION+SELE
 
 En este laboratorio, hay que ir probando qué secuencia es la que reconoce el servidor y devuelve un código de respuesta 200.
 
-![lab_04A.png](../assets/img/lab_04A.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_04A.png?raw=true)
 
 Para ello, elige antes una categoría de la página web e inyecta el código a continuación junto al comentario final.
 
 ___+UNION+SELECT+BANNER,+NULL+FROM+v$version___
 
 
-![lab_03B.png](../assets/img/lab_04B.png)
+![](https://github.com/savalls/savalls.github.io/blob/main/assets/img/lab_04B.png?raw=true)
