@@ -2,12 +2,12 @@
 layout: post
 categories: 
 conToc: true
-title: Tarea Laboratorios
+title: Tarea SQL Injection - Laboratorios
 ---
 
 
 
-# Tarea Laboratorios
+# Tarea SQL Injection - Laboratorios
 
 
 
