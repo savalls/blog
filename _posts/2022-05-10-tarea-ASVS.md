@@ -15,13 +15,13 @@ title: Tarea ASVS
   
  ASVS define tres niveles de verificación para la seguridad, incrementando su profundidad en cada nivel. 
 
-* ###### __Nivel 1__ es para todo el software.
-* ###### __Nivel 2__ es para las aplicaciones conteniendo datos sensibles, los cuales requieren protección.
-* ###### __Nivel 3__ es para las aplicaciones más críticas, aplicaciones realizando transacciones de alto valor, conteniendo datos médicos sensibles, o cualquier aplicación el cual requiera un alto nivel de confianza.
+* __Nivel 1__ es para todo el software.
+*  __Nivel 2__ es para las aplicaciones conteniendo datos sensibles, los cuales requieren protección.
+*  __Nivel 3__ es para las aplicaciones más críticas, aplicaciones realizando transacciones de alto valor, conteniendo datos médicos sensibles, o cualquier aplicación el cual requiera un alto nivel de confianza.
 
 Nuestra empresa ficticia se refiere a un fabricante de envases, embalajes y derivados del cartón ondulado que concede acceso a intranet, mediante zona de clientes, y  desde la cual se realizan gestiones necesarias en cuanto a diseños de productos, estado de pedidos, etc..
 
-El nivel asociado al proyecto es de Nivel 2.
+El nivel asociado al proyecto es de grado 2.
 
 
 
