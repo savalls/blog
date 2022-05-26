@@ -136,6 +136,7 @@ Se aplican las siguientes consideraciones:
 3.  La eficiencia de la protección siempre debe ser verificada por un experto con experiencia en el testeo de tipos particulares de anti-manipulación y ofuscación utilizados (ver también los capítulos "ingeniería inversa" y "evaluación de protecciones del software" en la Guía de Pruebas de Seguridad Móvil).
 
 ### Impedir el Análisis Dinámico y la Manipulación
+
 | #       | MSTG-ID           | Descripción                                                                                                                                                                           | R |
 |---------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
 | **8.7** | MSTG-RESILIENCE-7 | La aplicación implementa múltiples mecanismos de detección para los puntos del 8.1 al 8.6. Nótese que, a mayor cantidad y diversidad de mecanismos usados, mayor será la resistencia. | x |
