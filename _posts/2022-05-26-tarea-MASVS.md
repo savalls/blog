@@ -47,11 +47,11 @@ La protección de datos sensibles, como las credenciales del usuario y la inform
 
 El MASVS se centra en las aplicaciones y por esto no cubre políticas para el dispositivo como Mobile Device Managment (MDM) ([https://gsuite.google.com/products/admin/mobile/](https://gsuite.google.com/products/admin/mobile/)) o Enter (EDM). Igualmente se recomienda utilizar estas soluciones en contextos empresariales.
 
-| #        | MSTG-ID         | Descripción                                                                                                                                                                                                                  | L1 | L2 |
-|----------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|----|
-| **2.13** | MSTG-STORAGE-13 | No se guarda ningún tipo de información sensible de forma local en el dispositivo móvil. En su lugar, esa información debería ser obtenida desde un sistema remoto sólo cuando es necesario y únicamente residir en memoria. |    | x  |
-| **2.14** | MSTG-STORAGE-14 | En caso de ser necesario guardar información sensible de forma local, ésta debe de ser cifrada usando una clave derivada del hardware de almacenamiento seguro, el cual debe requerir autenticación previa.                  |    | x  |
 
+| #       | MSTG-ID        | Descripción                                                                                  | L1 | L2 |
+|---------|----------------|----------------------------------------------------------------------------------------------|----|----|
+| **2.5** | MSTG-STORAGE-5 | Se desactiva la caché del teclado en los campos de texto que contienen información sensible. | x  | x  |
+| **2.6** | MSTG-STORAGE-6 | No se expone información sensible mediante mecanismos de comunicación entre procesos (IPC).  | x  | x  |
 
 ---
 # [V3: Requerimientos de Criptografía](https://github.com/OWASP/owasp-masvs/blob/master/Document-es/0x08-V3-Cryptography_Verification_Requirements.md)
@@ -74,22 +74,21 @@ La criptografía es un componente esencial a la hora de proteger los datos almac
 
 En la mayoría de los casos, una parte esencial de la arquitectura global de aplicaciones móviles es que los usuarios deben inician sesión en un servicio remoto. Aunque la mayor parte de la lógica ocurre en el servidor, MASVS define algunos requerimientos básicos sobre como manejar las cuentas y sesiones del usuario.
 
+| #       | MSTG-ID     | Descripción                                                                                                            | L1 | L2 |
+|---------|-------------|------------------------------------------------------------------------------------------------------------------------|----|----|
+| **4.6** | MSTG-AUTH-6 | El servidor implementa mecanismos, cuando credenciales de autenticación son ingresadas una cantidad excesiva de veces. | x  | x  |
+| **4.7** | MSTG-AUTH-7 | Las sesiones y los tokens de acceso expiran luego de un tiempo predefinido de inactividad.                             | x  | x  |
 
-| #        | MSTG-ID      | Descripción                                                                                                                                                                                                                                                           | L1 | L2 |
-|----------|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|----|
-| **4.10** | MSTG-AUTH-10 | Para realizar transacciones críticas se requiere una autenticación adicional (step-up).                                                                                                                                                                               |    | x  |
-| **4.11** | MSTG-AUTH-11 | La aplicación informa al usuario acerca de todas las actividades sensibles en su cuenta. El usuario es capaz de ver una lista de los dispositivos conectados, información contextual (dirección IP, localización, etc.), y es capaz de bloquear ciertos dispositivos. |    | x  |
 
 ---
 # [V5: Requerimientos de Comunicación a través de la red](https://github.com/OWASP/owasp-masvs/blob/master/Document-es/0x10-V5-Network_communication_requirements.md)
 
 Los controles enumerados en esta categoría tienen por objetivo asegurar la confidencialidad e integridad de la información intercambiada entre la aplicación móvil y los servicios del servidor. Como mínimo se deben utilizar canales seguros y cifrados utilizando el protocolo TLS con las configuraciones apropiadas. En el nivel 2 se establecen medidas en profundidad como fijación de certificados SSL.
 
-
-| #       | MSTG-ID        | Descripción                                                                                                                                                        | L1 | L2 |
-|---------|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|----|
-| **5.5** | MSTG-NETWORK-5 | La aplicación no depende de un único canal de comunicaciones inseguro (email o SMS) para operaciones críticas como registro de usuarios o recuperación de cuentas. |    | x  |
-| **5.6** | MSTG-NETWORK-6 | La aplicación sólo depende de bibliotecas de conectividad y seguridad actualizadas.                                                                                |    | x  |
+| #       | MSTG-ID        | Descripción                                                                                                                                                                                                 | L1 | L2 |
+|---------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|----|
+| **5.1** | MSTG-NETWORK-1 | La información es enviada cifrada utilizando TLS. El canal seguro es usado consistentemente en la aplicación.                                                                                               | x  | x  |
+| **5.2** | MSTG-NETWORK-2 | Las configuraciones del protocolo TLS siguen las mejores prácticas de la industria, o lo hacen lo mejor posible en caso de que el sistema operativo del dispositivo no soporte los estándares recomendados. | x  | x  |
 
 
 
