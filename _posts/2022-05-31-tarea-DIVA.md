@@ -17,8 +17,6 @@ En esta tarea crackearemos una App vulnerable de android.  En este link podrás 
 
 Iremos siguiendo los pasos descritos en los contenidos del curso relativos a la [Ingeniería inversa en Android](https://victorponz.github.io/Ciberseguridad-PePS/tema6/seguridad/m%C3%B3vil/2022/03/01/Ingenieria-inversa.html) 
 
-–
-
 
 Ejecutamos la aplicación modificada por nosotros en AndroidStudio.
 
@@ -26,6 +24,7 @@ Ejecutamos la aplicación modificada por nosotros en AndroidStudio.
 
 ![2022-05-31_diva_001.png](../assets/img/2022-05-31_diva_001.png)
 
+Y con la actividad del movil en el mulador, iremos desgranando los 13 retos descritos en [Cracking Damn Insecur and Vulnerable App (DIVA)](https://resources.infosecinstitute.com/topic/cracking-damn-insecure-and-vulnerable-app-diva-part-5/)
 
 ### Challenge 1
 
