@@ -2,5 +2,7 @@
   link: /
 - name: Buscar 
   link: /search.html
+- name: Savalls CV
+  link: /README.html
 - name: Acerca de 
   link: /README.html
