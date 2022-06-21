@@ -3,6 +3,6 @@
 - name: Buscar 
   link: /search.html
 - name: Savalls CV
-  link: /_cv/README.md
+  link: /cv/README.md
 - name: Acerca de 
   link: /README.html

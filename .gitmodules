@@ -1,3 +1,6 @@
 [submodule "_cv"]
 	path = _cv
 	url = https://github.com/Template-Latex/Professional-CV.git
+[submodule "cv"]
+	path = cv
+	url = https://github.com/Template-Latex/Professional-CV.git
