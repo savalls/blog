@@ -1,0 +1,2675 @@
+% Template:     Professional-CV
+% Documento:    Núcleo del template
+% Versión:      3.2.3 (04/06/2022)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/professional-cv]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% -----------------------------------------------------------------------------
+% CONFIGURACIONES
+% -----------------------------------------------------------------------------
+\input{template_config}
+
+% -----------------------------------------------------------------------------
+% IMPORTACIÓN DE FUNCIONES Y LIBRERÍAS
+% -----------------------------------------------------------------------------
+% Se guardan variables antes de cargar librerías
+\let\RE\Re
+\let\IM\Im
+
+% Parches de librerías
+\let\counterwithout\relax
+\let\counterwithin\relax
+\let\underbar\relax
+\let\underline\relax
+
+% Si se desactiva el idioma
+\def\unaccentedoperators {}
+\def\decimalpoint {}
+\def\bibname {}
+
+% Parche de sectsty.sty
+\makeatletter
+\def\underline#1{\relax\ifmmode\@@underline{#1}\else $\@@underline{\hbox{#1}}\m@th$\relax\fi}
+\def\underbar#1{\underline{\sbox\tw@{#1}\dp\tw@\z@\box\tw@}}
+\makeatother
+
+% Tamaño de la fuente del documento
+\usepackage{scrextend}
+\usepackage{anyfontsize}
+\changefontsizes{\documentfontsize pt}
+
+% -----------------------------------------------------------------------------
+% Librerías del núcleo
+% -----------------------------------------------------------------------------
+% Manejo de condicionales
+\usepackage{iftex}
+\usepackage{ifthen}
+
+% Verifica el tipo de compilador
+\ifPDFTeX
+	\def\compilertype {pdf2latex}
+\else\ifXeTeX
+	\def\compilertype {xelatex}
+\else\ifLuaTeX
+	\def\compilertype {lualatex}
+\else
+	\errmessage{Compilador no soportado}
+	\stop
+	\fi\fi
+\fi
+
+% Carga el idioma
+\usepackage{tracklang}
+\IfTrackedLanguage{spanish}{
+	\usepackage[es-nosectiondot,es-lcroman,es-noquoting]{babel}
+}{ % english, otros
+	\usepackage{babel}
+}
+
+% Codificación
+\ifthenelse{\equal{\compilertype}{pdf2latex}}{
+	\usepackage[utf8]{inputenc}}{
+}
+
+% Evita error "Too many alphabets used in version normal"
+\newcommand\hmmax {0}
+\newcommand\bmmax {0}
+
+% -----------------------------------------------------------------------------
+% Librerías independientes
+% -----------------------------------------------------------------------------
+\usepackage{amssymb}       % Librerías matemáticas
+\usepackage{array}         % Nuevas características a las tablas
+\usepackage{booktabs}      % Permite manejar elementos visuales en tablas
+\usepackage{color}         % Colores
+\usepackage{colortbl}      % Administración de color en tablas
+\usepackage{enumitem}      % Permite enumerar ítems
+\usepackage{graphicx}      % Propiedades extra para los gráficos
+\usepackage{ifxetex}       % Detecta compilador
+\usepackage{indentfirst}   % Identado en cada párrafo inicial
+\usepackage{lipsum}        % Permite crear textos dummy
+\usepackage{mathrsfs}      % Define más fuentes matemáticas
+\usepackage{mathtools}     % Permite utilizar notaciones matemáticas
+\usepackage{mdwlist}       % Listas con encabezado
+\usepackage{multicol}      % Múltiples columnas
+\usepackage{needspace}     % Maneja los espacios en página
+\usepackage{ragged2e}      % Mejora posicionado
+\usepackage{relsize}       % Escalado avanzado
+\usepackage{sectsty}       % Cambia el estilo de los títulos
+\usepackage{selinput}      % Compatibilidad con acentos
+\usepackage{setspace}      % Cambia el espacio entre líneas
+\usepackage{soul}          % Permite subrayar texto
+\usepackage{textcomp}      % Simbología común
+\usepackage{wasysym}       % Contiene caracteres misceláneos
+\usepackage{wrapfig}       % Permite comprimir imágenes
+\usepackage{xcolor}        % Administración de color avanzado
+\usepackage{xspace}        % Administra espacios en párrafos y líneas
+\usepackage{xurl}          % Permite añadir enlaces
+
+% Dimensiones y geometría del documento
+\ifthenelse{\equal{\compilertype}{lualatex}}{ % En lualatex sólo se puede cambiar 1 vez el margen
+	\usepackage[top=\pagemargintop cm,bottom=\pagemarginbottom cm,left=\pagemarginleft cm,right=\pagemarginright cm]{geometry}
+}{ % pdf2latex, xelatex
+	\usepackage{geometry}
+}
+
+% -----------------------------------------------------------------------------
+% Librerías con parámetros
+% -----------------------------------------------------------------------------
+\usepackage[pdfencoding=auto,psdextra]{hyperref} % Enlaces, referencias
+\usepackage[final]{pdfpages} % Permite administrar páginas en pdf
+
+% -----------------------------------------------------------------------------
+% Librerías dependientes
+% -----------------------------------------------------------------------------
+\usepackage{bookmark}      % Administración de marcadores en pdf
+\usepackage{fancyhdr}      % Encabezados y pie de páginas
+\usepackage{float}         % Administrador de posiciones de objetos
+\usepackage{hyperxmp}      % Etiquetas opcionales para el pdf compilado
+\usepackage{multirow}      % Agrega nuevas opciones a las tablas
+
+% -----------------------------------------------------------------------------
+% Tipografía del documento
+% -----------------------------------------------------------------------------
+% Tipografías clásicas
+\ifthenelse{\equal{\fontdocument}{default}}{
+	\ifxetex
+		\usepackage{fontspec}
+		\setmainfont
+		[ExternalLocation,
+		Mapping=tex-text,
+		Numbers=OldStyle,
+		Ligatures={Common,Contextual},
+		BoldFont=texgyrepagella-bold.otf,
+		ItalicFont=texgyrepagella-italic.otf,
+		BoldItalicFont=texgyrepagella-bolditalic.otf]
+		{texgyrepagella-regular.otf}
+		\usepackage[protrusion]{microtype}
+	\else
+		\usepackage{tgpagella}
+		\usepackage[expansion,protrusion]{microtype}
+	\fi
+}{
+\ifthenelse{\equal{\fontdocument}{lmodern}}{
+	\usepackage{lmodern}
+}{
+\ifthenelse{\equal{\fontdocument}{arial}}{
+	\usepackage{helvet}
+	\renewcommand{\familydefault}{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{arial2}}{
+	\usepackage{arial}
+}{
+\ifthenelse{\equal{\fontdocument}{times}}{
+	\usepackage{mathptmx}
+}{
+\ifthenelse{\equal{\fontdocument}{mathptmx}}{
+	\usepackage{mathptmx}
+}{
+\ifthenelse{\equal{\fontdocument}{helvet}}{
+	\renewcommand{\familydefault}{\sfdefault}
+	\usepackage[scaled=0.95]{helvet}
+	\usepackage[helvet]{sfmath}
+}{
+\ifthenelse{\equal{\fontdocument}{opensans}}{
+	\usepackage[default,scale=0.95]{opensans}
+}{
+\ifthenelse{\equal{\fontdocument}{mathpazo}}{
+	\usepackage{mathpazo}
+}{
+\ifthenelse{\equal{\fontdocument}{cambria}}{
+	\usepackage{caladea}
+}{
+\ifthenelse{\equal{\fontdocument}{libertine}}{
+	\usepackage[libertine]{newtxmath}
+	\usepackage[tt=false]{libertine}
+}{
+\ifthenelse{\equal{\fontdocument}{custom}}{
+}{
+
+% Otros (último: fbb el 08/08/2021 - https://tug.org/FontCatalogue/seriffonts.html)
+\ifthenelse{\equal{\fontdocument}{accanthis}}{
+	\usepackage{accanthis}
+}{
+\ifthenelse{\equal{\fontdocument}{alegreya}}{
+	\usepackage{Alegreya}
+	\renewcommand*\oldstylenums[1]{{\AlegreyaOsF #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{alegreyasans}}{
+	\usepackage[sfdefault]{AlegreyaSans}
+	\renewcommand*\oldstylenums[1]{{\AlegreyaSansOsF #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{algolrevived}}{
+	\usepackage{algolrevived}
+}{
+\ifthenelse{\equal{\fontdocument}{almendra}}{
+	\usepackage{almendra}
+}{
+\ifthenelse{\equal{\fontdocument}{antpolt}}{
+	\usepackage{antpolt}
+}{
+\ifthenelse{\equal{\fontdocument}{antpoltlight}}{
+	\usepackage[light]{antpolt}
+}{
+\ifthenelse{\equal{\fontdocument}{anttor}}{
+	\usepackage[math]{anttor}
+}{
+\ifthenelse{\equal{\fontdocument}{anttorcondensed}}{
+	\usepackage[condensed,math]{anttor}
+}{
+\ifthenelse{\equal{\fontdocument}{anttorlight}}{
+	\usepackage[light,math]{anttor}
+}{
+\ifthenelse{\equal{\fontdocument}{anttorlightcondensed}}{
+	\usepackage[light,condensed,math]{anttor}
+}{
+\ifthenelse{\equal{\fontdocument}{arev}}{
+	\let\quarternote\relax
+	\let\eighthnote\relax
+	\usepackage{arev}
+}{
+\ifthenelse{\equal{\fontdocument}{arimo}}{
+	\usepackage[sfdefault]{arimo}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{arvo}}{
+	\usepackage{Arvo}
+}{
+\ifthenelse{\equal{\fontdocument}{baskervald}}{
+	\usepackage{baskervald}
+}{
+\ifthenelse{\equal{\fontdocument}{baskervaldx}}{
+	\usepackage[lf]{Baskervaldx}
+	\usepackage[bigdelims,vvarbb]{newtxmath}
+	\usepackage[cal=boondoxo]{mathalfa}
+	\renewcommand*\oldstylenums[1]{\textosf{#1}}
+}{
+\ifthenelse{\equal{\fontdocument}{berasans}}{
+	\usepackage[scaled]{berasans}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{beraserif}}{
+	\usepackage{bera}
+}{
+\ifthenelse{\equal{\fontdocument}{biolinum}}{
+	\usepackage{libertine}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{bitter}}{
+	\usepackage{bitter}
+}{
+\ifthenelse{\equal{\fontdocument}{boisik}}{
+	\let\div\relax
+	\usepackage{boisik}
+}{
+\ifthenelse{\equal{\fontdocument}{bookman}}{
+	\usepackage{bookman}
+}{
+\ifthenelse{\equal{\fontdocument}{cabin}}{
+	\usepackage[sfdefault]{cabin}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{cabincondensed}}{
+	\usepackage[sfdefault,condensed]{cabin}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{caladea}}{
+	\usepackage{caladea}
+}{
+\ifthenelse{\equal{\fontdocument}{cantarell}}{
+	\usepackage[default]{cantarell}
+}{
+\ifthenelse{\equal{\fontdocument}{carlito}}{
+	\usepackage[sfdefault]{carlito}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{charterbt}}{
+	\usepackage[bitstream-charter]{mathdesign}
+}{
+\ifthenelse{\equal{\fontdocument}{chivolight}}{
+	\usepackage[familydefault,light]{Chivo}
+}{
+\ifthenelse{\equal{\fontdocument}{chivoregular}}{
+	\usepackage[familydefault,regular]{Chivo}
+}{
+\ifthenelse{\equal{\fontdocument}{clara}}{
+	\usepackage{clara}
+}{
+\ifthenelse{\equal{\fontdocument}{clearsans}}{
+	\usepackage[sfdefault]{ClearSans}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{cochineal}}{
+	\usepackage{cochineal}
+}{
+\ifthenelse{\equal{\fontdocument}{coelacanth}}{
+	\usepackage[nf]{coelacanth}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{coelacanthextralight}}{
+	\usepackage[el,nf]{coelacanth}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{coelacanthlight}}{
+	\usepackage[l,nf]{coelacanth}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{comfortaa}}{
+	\usepackage[default]{comfortaa}
+}{
+\ifthenelse{\equal{\fontdocument}{comicneue}}{
+	\usepackage[default]{comicneue}
+}{
+\ifthenelse{\equal{\fontdocument}{comicneueangular}}{
+	\usepackage[default,angular]{comicneue}
+}{
+\ifthenelse{\equal{\fontdocument}{computerconcrete}}{
+	\usepackage{concmath}
+}{
+\ifthenelse{\equal{\fontdocument}{computerconcreteeuler}}{
+	\let\Re\relax
+	\let\Im\relax
+	\usepackage{beton}
+	\usepackage{euler}
+}{
+\ifthenelse{\equal{\fontdocument}{computermodern}}{
+}{
+\ifthenelse{\equal{\fontdocument}{computermodernbright}}{
+	\usepackage{cmbright}
+}{
+\ifthenelse{\equal{\fontdocument}{crimson}}{
+	\usepackage{crimson}
+}{
+\ifthenelse{\equal{\fontdocument}{crimsonpro}}{
+	\usepackage{CrimsonPro}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{crimsonproextralight}}{
+	\usepackage[extralight]{CrimsonPro}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{crimsonprolight}}{
+	\usepackage[light]{CrimsonPro}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{crimsonpromedium}}{
+	\usepackage[medium]{CrimsonPro}
+	\let\oldnormalfont\normalfont
+	\def\normalfont{\oldnormalfont\mdseries}
+}{
+\ifthenelse{\equal{\fontdocument}{cyklop}}{
+	\usepackage{cyklop}
+}{
+\ifthenelse{\equal{\fontdocument}{dejavusans}}{
+	\usepackage{DejaVuSans}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{dejavusanscondensed}}{
+	\usepackage{DejaVuSansCondensed}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{domitian}}{
+	\usepackage{mathpazo}
+	\usepackage{domitian}
+	\let\oldstylenums\oldstyle
+}{
+\ifthenelse{\equal{\fontdocument}{droidsans}}{
+	\usepackage[defaultsans]{droidsans}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{electrum}}{
+	\usepackage[lf]{electrum}
+}{	
+\ifthenelse{\equal{\fontdocument}{erewhon}}{
+	\usepackage[proportional,scaled=1.064]{erewhon}
+	\usepackage[erewhon,vvarbb,bigdelims]{newtxmath}
+	\renewcommand*\oldstylenums[1]{\textosf{#1}}
+}{
+\ifthenelse{\equal{\fontdocument}{fbb}}{
+	\usepackage{fbb}
+}{
+\ifthenelse{\equal{\fontdocument}{fetamont}}{
+	\usepackage{fetamont}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{firasans}}{
+	\usepackage[sfdefault]{FiraSans}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{firasansnewtxsf}}{
+	\usepackage[sfdefault]{FiraSans}
+	\usepackage{newtxsf}
+}{
+\ifthenelse{\equal{\fontdocument}{fourier}}{
+	\usepackage{fourier}
+}{
+\ifthenelse{\equal{\fontdocument}{fouriernc}}{
+	\usepackage{fouriernc}
+}{
+\ifthenelse{\equal{\fontdocument}{gfsartemisia}}{
+	\let\textlozenge\relax
+	\usepackage{gfsartemisia}
+}{
+\ifthenelse{\equal{\fontdocument}{gfsartemisiaeuler}}{
+	\let\textlozenge\relax
+	\let\Re\relax
+	\let\Im\relax
+	\usepackage{gfsartemisia-euler}
+}{
+\ifthenelse{\equal{\fontdocument}{heuristica}}{
+	\usepackage{heuristica}
+	\usepackage[heuristica,vvarbb,bigdelims]{newtxmath}
+	\renewcommand*\oldstylenums[1]{\textosf{#1}}
+}{
+\ifthenelse{\equal{\fontdocument}{iwona}}{
+	\usepackage[math]{iwona}
+}{
+\ifthenelse{\equal{\fontdocument}{iwonacondensed}}{
+	\usepackage[condensed,math]{iwona}
+}{
+\ifthenelse{\equal{\fontdocument}{iwonalight}}{
+	\usepackage[light,math]{iwona}
+}{
+\ifthenelse{\equal{\fontdocument}{iwonalightcondensed}}{
+	\usepackage[light,condensed,math]{iwona}
+}{
+\ifthenelse{\equal{\fontdocument}{kerkis}}{
+	\usepackage{kmath,kerkis}
+}{
+\ifthenelse{\equal{\fontdocument}{kurier}}{
+	\usepackage[math]{kurier}
+}{
+\ifthenelse{\equal{\fontdocument}{kuriercondensed}}{
+	\usepackage[condensed,math]{kurier}
+}{
+\ifthenelse{\equal{\fontdocument}{kurierlight}}{
+	\usepackage[light,math]{kurier}
+}{
+\ifthenelse{\equal{\fontdocument}{kurierlightcondensed}}{
+	\usepackage[light,condensed,math]{kurier}
+}{
+\ifthenelse{\equal{\fontdocument}{lato}}{
+	\usepackage[default]{lato}
+}{
+\ifthenelse{\equal{\fontdocument}{libertinus}}{
+	\usepackage{libertinus}
+}{
+\ifthenelse{\equal{\fontdocument}{librebaskerville}}{
+	\usepackage{librebaskerville}
+}{
+\ifthenelse{\equal{\fontdocument}{librebodoni}}{
+	\usepackage{LibreBodoni}
+}{
+\ifthenelse{\equal{\fontdocument}{librecaslon}}{
+	\usepackage{librecaslon}
+}{
+\ifthenelse{\equal{\fontdocument}{libris}}{
+	\usepackage{libris}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{lxfonts}}{
+	\usepackage{lxfonts}
+}{
+\ifthenelse{\equal{\fontdocument}{merriweather}}{
+	\usepackage[sfdefault]{merriweather}
+}{
+\ifthenelse{\equal{\fontdocument}{merriweatherlight}}{
+	\usepackage[sfdefault,light]{merriweather}
+}{
+\ifthenelse{\equal{\fontdocument}{mintspirit}}{
+	\usepackage[default]{mintspirit}
+}{
+\ifthenelse{\equal{\fontdocument}{mlmodern}}{
+	\usepackage{mlmodern}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratalternatesextralight}}{
+	\usepackage[defaultfam,extralight,tabular,lining,alternates]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratalternatesregular}}{
+	\usepackage[defaultfam,tabular,lining,alternates]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratalternatesthin}}{
+	\usepackage[defaultfam,thin,tabular,lining,alternates]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratextralight}}{
+	\usepackage[defaultfam,extralight,tabular,lining]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratlight}}{
+	\usepackage[defaultfam,light,tabular,lining]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratregular}}{
+	\usepackage[defaultfam,tabular,lining]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{montserratthin}}{
+	\usepackage[defaultfam,thin,tabular,lining]{montserrat}
+	\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+}{
+\ifthenelse{\equal{\fontdocument}{newpx}}{
+	\usepackage{newpxtext,newpxmath}
+}{
+\ifthenelse{\equal{\fontdocument}{nimbussans}}{
+	\usepackage{nimbussans}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{noto}}{
+	\usepackage[sfdefault]{noto}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{notoserif}}{
+	\usepackage{notomath}
+}{
+\ifthenelse{\equal{\fontdocument}{opensansserif}}{
+	\usepackage[default,oldstyle,scale=0.95]{opensans}
+}{
+\ifthenelse{\equal{\fontdocument}{overlock}}{
+	\usepackage[sfdefault]{overlock}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{paratype}}{
+	\usepackage{paratype}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{paratypesanscaption}}{
+	\usepackage{PTSansCaption}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{paratypesansnarrow}}{
+	\usepackage{PTSansNarrow}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{pxfonts}}{
+	\usepackage{pxfonts}
+}{
+\ifthenelse{\equal{\fontdocument}{quattrocento}}{
+	\usepackage[sfdefault]{quattrocento}
+}{
+\ifthenelse{\equal{\fontdocument}{raleway}}{
+	\usepackage[default]{raleway}
+}{
+\ifthenelse{\equal{\fontdocument}{roboto}}{
+	\usepackage[sfdefault]{roboto}
+}{
+\ifthenelse{\equal{\fontdocument}{robotocondensed}}{
+	\usepackage[sfdefault,condensed]{roboto}
+}{
+\ifthenelse{\equal{\fontdocument}{robotolight}}{
+	\usepackage[sfdefault,light]{roboto}
+}{
+\ifthenelse{\equal{\fontdocument}{robotolightcondensed}}{
+	\usepackage[sfdefault,light,condensed]{roboto}
+}{
+\ifthenelse{\equal{\fontdocument}{robotothin}}{
+	\usepackage[sfdefault,thin]{roboto}
+}{
+\ifthenelse{\equal{\fontdocument}{rosario}}{
+	\usepackage[familydefault]{Rosario}
+}{
+\ifthenelse{\equal{\fontdocument}{sourcesanspro}}{
+	\usepackage[default]{sourcesanspro}
+}{
+\ifthenelse{\equal{\fontdocument}{step}}{
+	\usepackage[notext]{stix}
+	\usepackage{step}
+}{
+\ifthenelse{\equal{\fontdocument}{stickstoo}}{
+	\usepackage{stickstootext}
+	\usepackage[stickstoo,vvarbb]{newtxmath}
+}{
+\ifthenelse{\equal{\fontdocument}{texgyrebonum}}{
+	\usepackage{tgbonum}
+}{
+\ifthenelse{\equal{\fontdocument}{txfonts}}{
+	\usepackage{txfonts}
+}{
+\ifthenelse{\equal{\fontdocument}{uarial}}{
+	\usepackage{uarial}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{ugq}}{
+	\renewcommand*\sfdefault{ugq}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+\ifthenelse{\equal{\fontdocument}{universalis}}{
+	\usepackage[sfdefault]{universalis}
+}{
+\ifthenelse{\equal{\fontdocument}{universaliscondensed}}{
+	\usepackage[condensed,sfdefault]{universalis}
+}{
+\ifthenelse{\equal{\fontdocument}{venturis}}{
+	\usepackage[lf]{venturis}
+	\renewcommand*\familydefault{\sfdefault}
+}{
+	\throwbadconfig[nostop]{Fuente desconocida}{\fontdocument}{(Fuentes recomendadas) default,lmodern,carial,arial2,times,mathptmx,helvet,opensans,mathpazo,cambria,libertine,custom}
+	\throwbadconfig[noheader-nostop]{Fuente desconocida}{\fontdocument}{(Fuentes adicionales) accanthis,alegreya,alegreyasans,algolrevived,almendra,antpolt,antpoltlight,anttor,anttorcondensed,anttorlight,anttorlightcondensed,arev,arimo,arvo,baskervald,baskervaldx,berasans,beraserif,biolinum,bitter,boisik,bookman,cabin,cabincondensed,cantarell,caladea,carlito,charterbt,chivolight,chivoregular,clara,clearsans,cochineal,coelacanth,coelacanthextralight,coelacanthlight,comfortaa,comicneue,comicneueangular,computerconcrete,computerconcreteeuler,computermodern,computermodernbright,crimson,crimsonpro,crimsonproextralight,crimsonprolight,crimsonpromedium,cyklop}
+	\throwbadconfig[noheader-nostop]{Fuente desconocida}{\fontdocument}{dejavusans,dejavusanscondensed,domitian,droidsans,electrum,erewhon,fbb,fetamont,firasans,firasansnewtxsf,fourier,fouriernc,gfsartemisia,gfsartemisiaeuler,heuristica,iwona,iwonacondensed,iwonalight,iwonalightcondensed,kerkis,kurier,kuriercondensed,kurierlight,kurierlightcondensed,lato,libertinus,librebaskerville,librebodoni,librecaslon,libris,lxfonts}
+	\throwbadconfig[noheader]{Fuente desconocida}{\fontdocument}{merriweather,merriweatherlight,mintspirit,mlmodern,montserratalternatesextralight,montserratalternatesregular,montserratalternatesthin,montserratextralight,montserratlight,montserratregular,montserratthin,newpx,nimbussans,noto,notoserif,opensansserif,overlock,paratype,paratypesanscaption,paratypesansnarrow,pxfonts,quattrocento,raleway,roboto,robotolight,robotolightcondensed,robotothin,rosario,sourcesanspro,step,stickstoo,uarial,texgyrebonum,txfonts,ugq,universalis,universaliscondensed,venturis}
+	}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}
+
+% -----------------------------------------------------------------------------
+% Tipografía typewriter
+% -----------------------------------------------------------------------------
+% https://tug.org/FontCatalogue/typewriterfonts.html
+\ifthenelse{\equal{\fonttypewriter}{custom}}{
+}{
+\ifthenelse{\equal{\fonttypewriter}{tmodern}}{
+	\renewcommand*\ttdefault{lmvtt}
+}{
+\ifthenelse{\equal{\fonttypewriter}{anonymouspro}}{
+	\usepackage[ttdefault=true]{AnonymousPro}
+}{
+\ifthenelse{\equal{\fonttypewriter}{ascii}}{
+	\usepackage{ascii}
+	\let\SI\relax
+}{
+\ifthenelse{\equal{\fonttypewriter}{beramono}}{
+	\usepackage[scaled]{beramono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{cascadiacode}}{
+	\usepackage{cascadia-code}
+}{
+\ifthenelse{\equal{\fonttypewriter}{cmpica}}{
+	\usepackage{addfont}
+	\addfont{OT1}{cmpica}{\pica}
+	\addfont{OT1}{cmpicab}{\picab}
+	\addfont{OT1}{cmpicati}{\picati}
+	\renewcommand*\ttdefault{pica}
+}{
+\ifthenelse{\equal{\fonttypewriter}{cmodern}}{
+}{
+\ifthenelse{\equal{\fonttypewriter}{courier}}{
+	\usepackage{courier}
+}{
+\ifthenelse{\equal{\fonttypewriter}{courier10}}{
+	\usepackage{courierten}
+}{
+\ifthenelse{\equal{\fonttypewriter}{cmvtt}}{
+	\renewcommand*\ttdefault{cmvtt}
+}{
+\ifthenelse{\equal{\fonttypewriter}{dejavusansmono}}{
+	\usepackage[scaled]{DejaVuSansMono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{droidsansmono}}{
+	\usepackage[defaultmono]{droidsansmono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{firamono}}{
+	\usepackage[scale=0.85]{FiraMono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{gomono}}{
+	\usepackage[scale=0.85]{GoMono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{inconsolata}}{
+	\usepackage{inconsolata}
+}{
+\ifthenelse{\equal{\fonttypewriter}{nimbusmono}}{
+	\usepackage{nimbusmono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{newtxtt}}{
+	\usepackage[zerostyle=d]{newtxtt}
+}{
+\ifthenelse{\equal{\fonttypewriter}{nimbusmono}}{
+	\usepackage{nimbusmono}
+}{
+\ifthenelse{\equal{\fonttypewriter}{nimbusmononarrow}}{
+	\usepackage{nimbusmononarrow}
+}{
+\ifthenelse{\equal{\fonttypewriter}{lcmtt}}{
+	\renewcommand*\ttdefault{lcmtt}
+}{
+\ifthenelse{\equal{\fonttypewriter}{sourcecodepro}}{
+	\usepackage[ttdefault=true,scale=0.85]{sourcecodepro}
+}{
+\ifthenelse{\equal{\fonttypewriter}{texgyrecursor}}{
+	\usepackage{tgcursor}
+}{
+\ifthenelse{\equal{\fonttypewriter}{txtt}}{
+	\renewcommand*\ttdefault{txtt}
+}{
+	\throwbadconfig{Fuente desconocida}{\fonttypewriter}{custom,anonymouspro,ascii,beramono,cascadiacode,cmpica,cmodern,courier,courier10,cvmtt,dejavusansmono,droidsansmono,firamono,gomono,inconsolata,kpmonospaced,lcmtt,newtxtt,nimbusmono,nimbusmononarrow,texgyrecursor,tmodern,txtt}
+	}}}}}}}}}}}}}}}}}}}}}}}
+}
+
+% -----------------------------------------------------------------------------
+% Finales
+% -----------------------------------------------------------------------------
+\usepackage[T1]{fontenc} % Caracteres acentuados
+\usepackage{csquotes} % Citas y comillas
+\ifthenelse{\equal{\compilertype}{pdf2latex}}{
+	\inputencoding{utf8}}{
+}
+
+% Definición de variables globales
+\global\def\GLOBALhasinstitution {false}
+\global\def\GLOBALheaderfaimport {false}
+\global\def\GLOBALheaderlineitem {false}
+\global\def\GLOBALheaderseparatorsticky {false}
+
+\def\LOCALpercentchar#1{}
+\edef\LOCALpercentchar{\expandafter\LOCALpercentchar\string\%}
+
+% Archivo que guarda el código del header
+\newwrite\fileheaderitems
+\immediate\openout\fileheaderitems=\jobname.hitems
+\AtBeginDocument{\immediate\closeout\fileheaderitems}                               
+
+% Lanza un mensaje de error
+% 	#1	Función del error
+%	#2	Mensaje
+\newcommand{\throwerror}[2]{%
+	\errmessage{LaTeX Error: \noexpand#1 #2 (linea \the\inputlineno)}%
+	\stop%
+}
+
+% Lanza un mensaje de advertencia
+%	#1	Mensaje
+\newcommand{\throwwarning}[1]{%
+	\errmessage{LaTeX Warning: #1 (linea \the\inputlineno)}%
+}
+
+% Lanza un mensaje de error indicando mala configuración
+%	#1	Mensaje de error
+% 	#2	Configuración usada
+%	#3	Valores esperados
+\newcommand{\throwbadconfig}[3]{%
+	\errmessage{LaTeX Warning: #1 \noexpand #2=#2. Valores esperados: #3}%
+	\stop%
+}
+
+% Lanza un mensaje de error indicando mala configuración dentro de begin{document}
+%	#1	Mensaje de error
+% 	#2	Configuración usada
+%	#3	Valores esperados
+\newcommand{\throwbadconfigondoc}[3]{%
+	\errmessage{#1 \noexpand #2=#2. Valores esperados: #3}%
+	\stop%
+}
+
+% Comprueba si una variable está definida
+%	#1	Variable
+\newcommand{\checkvardefined}[1]{%
+	\ifthenelse{\isundefined{#1}}{%
+		\errmessage{LaTeX Warning: Variable \noexpand#1 no definida}%
+		\stop%
+	}{}%
+}
+
+% Comprueba si una variable está definida
+%	#1	Variable
+%	#2	Mensaje
+\newcommand{\checkextravarexist}[2]{%
+	\ifthenelse{\isundefined{#1}}{%
+		\errmessage{LaTeX Warning: Variable \noexpand#1 no definida}%
+		\ifx\hfuzz#2\hfuzz%
+			\errmessage{LaTeX Warning: Defina la variable en el bloque de INFORMACION DEL USUARIO al comienzo del archivo principal del Template}%
+		\else%
+			\errmessage{LaTeX Warning: #2}%
+		\fi%
+	}{}%
+}
+
+% Lanza un mensaje de error si una variable no ha sido definida
+% 	#1	Función del error
+%	#2	Variable
+%	#3	Mensaje
+\newcommand{\emptyvarerr}[3]{
+	\ifx\hfuzz#2\hfuzz%
+		\errmessage{LaTeX Warning: \noexpand#1 #3 (linea \the\inputlineno)}%
+	\fi%
+}
+
+% Cambia márgenes de las páginas [cm]
+% 	#1	Margen izquierdo
+%	#2	Margen superior
+%	#3	Margen derecho
+%	#4	Margen inferior
+\newcommand{\setpagemargincm}[4]{
+	\ifthenelse{\equal{\compilertype}{lualatex}}{
+		% Geometry no válido en lualatex
+	}{
+		\newgeometry{left=#1cm, top=#2cm, right=#3cm, bottom=#4cm}
+	}
+}
+
+% Cambia los márgenes del documento
+%	#1	Margen izquierdo
+%	#2	Margen derecho
+\newcommand{\changemargin}[2]{%
+	\emptyvarerr{\changemargin}{#1}{Margen izquierdo no definido}%
+	\emptyvarerr{\changemargin}{#2}{Margen derecho no definido}%
+	\list{}{\rightmargin#2\leftmargin#1}\item[]%
+}
+\let\endchangemargin=\endlist
+
+% Agrega el separador entre items del header
+\newcommand{\addheaderseparator}{%
+	\ifthenelse{\equal{\GLOBALheaderlineitem}{true}}{%
+		\ifthenelse{\equal{\GLOBALheaderseparatorsticky}{false}}{%
+			\immediate\write\fileheaderitems{\unexpanded{\textcolor{\headerseparatorcolor}{\headerseparator}}\LOCALpercentchar}%
+		}{}%
+	}{}%
+	\global\def\GLOBALheaderlineitem {true}%
+}
+
+% Agrega un item de texto al header
+%	#1	Texto
+\newcommand{\addheadertext}[1]{%
+	\global\def\GLOBALheaderseparatorsticky {false}%
+	\addheaderseparator%
+	\immediate\write\fileheaderitems{\unexpanded{\textcolor{\headertextcolor}{#1}}\LOCALpercentchar}%
+}
+
+% Agrega un correo al header
+%	#1	Correo
+\newcommand{\addheadermail}[1]{%
+	\global\def\GLOBALheaderseparatorsticky {false}%
+	\addheaderseparator%
+	\immediate\write\fileheaderitems{\unexpanded{\href{mailto:#1}{#1}}\LOCALpercentchar}%
+}
+
+% Agrega un enlace al header
+%	#1	Ícono de fontawesome, si está vacío se usa url normal
+%	#2	Enlace
+\newcommand{\addheaderlink}[2][]{%
+	\ifthenelse{\equal{#1}{}}{ % Sin ícono
+		\global\def\GLOBALheaderseparatorsticky {false}%
+		\addheaderseparator%
+		\immediate\write\fileheaderitems{\unexpanded{\url{#2}}\LOCALpercentchar}%
+	}{%
+		\addheaderseparator%
+		\ifthenelse{\equal{\GLOBALheaderfaimport}{false}}{%
+			\global\def\GLOBALheaderfaimport {true}%
+			\usepackage{fontawesome5}%
+		}{}%
+		\ifthenelse{\equal{\GLOBALheaderseparatorsticky}{true}}{%
+			\immediate\write\fileheaderitems{\unexpanded{\hspace{0.25cm}}\LOCALpercentchar}%
+		}{}%
+		\immediate\write\fileheaderitems{\unexpanded{\href{#2}{\faIcon{#1}}}\LOCALpercentchar}%
+		\global\def\GLOBALheaderseparatorsticky {true}%
+	}%
+}
+
+% Agrega una nueva línea al header
+\newcommand{\addheadernewline}{%
+	\global\def\GLOBALheaderlineitem {false}%
+	\global\def\GLOBALheaderseparatorsticky {false}%
+	\immediate\write\fileheaderitems{\unexpanded{\vspace{\headeritemslinespace cm}\\}\LOCALpercentchar}%
+}
+
+% Agrega un ícono
+%	#1	Nombre del ícono
+\newcommand{\addheadericon}[1]{%
+	\ifthenelse{\equal{\GLOBALheaderfaimport}{false}}{%
+		\global\def\GLOBALheaderfaimport {true}%
+		\usepackage{fontawesome5}%
+	}{}%
+	\immediate\write\fileheaderitems{\unexpanded{\faIcon{#1}}\LOCALpercentchar}%
+}
+
+% Agrega un espacio vertical
+%	#1	Tamaño del espacio
+\newcommand{\addheaderspace}[1]{%
+	\immediate\write\fileheaderitems{\unexpanded{\hspace{#1}}\LOCALpercentchar}%
+}
+
+% Agrega una imagen
+%	#1	Dirección de la imagen
+%	#2	Tamaño de la imagen {small, normal, large}
+\newcommand{\addheaderimage}[2]{%
+	\ifthenelse{\equal{#2}{small}}{%
+		\immediate\write\fileheaderitems{\unexpanded{\raisebox{-0.01\baselineskip}{\includegraphics[height=0.65\baselineskip]{#1}}}\LOCALpercentchar}%
+	}{%
+	\ifthenelse{\equal{#2}{normal}}{%
+		\immediate\write\fileheaderitems{\unexpanded{\raisebox{-0.15\baselineskip}{\includegraphics[height=1\baselineskip]{#1}}}\LOCALpercentchar}%
+	}{%
+	\ifthenelse{\equal{#2}{large}}{%
+		\immediate\write\fileheaderitems{\unexpanded{\raisebox{-0.25\baselineskip}{\includegraphics[height=1.25\baselineskip]{#1}}}\LOCALpercentchar}%
+	}{%
+		\throwerror{\addheaderimage}{Tamano de la imagen debe ser: small, normal o large}}}%
+	}%
+}
+
+% Escribe el encabezado del CV
+\newcommand{\writeheader}{%
+	% Escribe título
+	\ifthenelse{\equal{\writetitleheader}{true}}{%
+		\begin{center}%
+			\fontsize{16}{12} \selectfont \vspace{0.3cm} \textcolor{\titlecolor}{\headertitle}%
+		\end{center}
+		\vspace{\headertitlemargin cm}%
+	}{}%
+	
+	% Nombre
+	\noindent {\fontsizemaintitle \stylemaintitle \textcolor{\titlecolor}{\name}}%
+	\ifthenelse{\equal{\writebirthdayheader}{true}}{%
+		\quad \emph{\textcolor{\headertextcolor}{\birthmonth \birthday, \birthyear}}%
+	}{}%
+	\ifthenelse{\equal{\writelastchangeheader}{true}}{%
+		\hfill \quad {\scriptsize \textcolor{\lastchangeheadercolor}{\nomlastchange\ \today}}%
+	}{}%
+	\\ \vspace{-1em}%
+	
+	% Escribe items del header
+	\hypersetup{urlcolor=\headerurlcolor}%
+	\vspace{\headeritemsmargin cm}%
+	{%
+		\noindent%
+		\input{\jobname.hitems}%
+	}
+	\vspace{0.55em}%
+	\hypersetup{urlcolor=\urlcolor}%
+}
+
+% Título de las secciones principales
+%	#1	Título
+\newcommand*{\roottitle}[1]{%
+	\emptyvarerr{\roottitle}{#1}{Titulo no definido}%
+	\section*{#1}\vspace{-0.3em}\nopagebreak[4]%
+	\addcontentsline{toc}{section}{#1}%
+}
+
+% Crea un acrónimo de forma fácil
+%	#1	Acrónimo
+\newcommand*{\acr}[1]{%
+	\textscale{.85}{#1}%
+}
+
+% Crea un campo de texto
+% 	#1	Texto
+\newcommand{\bodytext}[1]{%
+	\nopagebreak[4]%
+	\begin{indentsection}%
+		\item[] #1%
+	\end{indentsection}
+	\pagebreak[2]%
+}
+
+% Crea una entrada en la tabla de datos personales
+%	#1	Nombre entrada
+%	#2	Datos entrada
+\newcommand{\personaltableentry}[2]{%
+	\emptyvarerr{\personaltableentry}{#1}{Nombre entrada no definido}%
+	\emptyvarerr{\personaltableentry}{#2}{Datos entrada no definidos}%
+	\textcolor{\personaltblentcolor}{\textbf{#1:}} & #2 \\%
+}
+
+% Inserta un objeto en un elemento institución
+%	#1	Cargo
+%	#2	Indica si escribe fechas o no
+%	#3	Fecha inicial
+%	#4	Fecha final
+%	#5	Ancho título
+%	#6	Ancho fecha
+%	#7	Descripción
+\newcommand{\newinstitutionentry}[7]{%
+	\ifthenelse{\equal{\GLOBALinstitutionenabled}{true}}{}{%
+		\throwwarning{Funciones \noexpand\newinstitutionentry, \noexpand\institutionentry o \noexpand\institutionentryshort no pueden usarse fuera del entorno \noexpand\institution}\stop%
+	}%
+	\emptyvarerr{\newinstitutionentry}{#1}{Cargo o posición no definido}%
+	\emptyvarerr{\newinstitutionentry}{#5}{Dimensiones de titulo no definido}%
+	\emptyvarerr{\newinstitutionentry}{#6}{Dimensiones de fecha no definido}%
+	\nopagebreak[4]%
+	\begin{indentsectiondouble}%
+		\item []%
+		\noindent%
+		\begin{minipage}{1\linewidth}%
+			\begin{minipage}[t][][t]{#5}%
+				{\textcolor{\instentrytitlecolor}{\textbf{#1}} ~ \\ \vspace{0.7em}}%
+			\end{minipage}
+			\hfill%
+			\begin{minipage}[t][][t]{#6}%
+				\begin{flushright}%
+					\noindent \textcolor{\datecolor}{\emph{#2#4#3}}%
+				\end{flushright}
+			\end{minipage}
+		\end{minipage}
+		\vspace{-1.1\baselineskip}%
+		\break%
+		\ifx\hfuzz#7\hfuzz%
+			\vspace{-0.75\baselineskip}%
+			\global\def\GLOBALinstitutionshortend {true}%
+		\else%
+			\begin{minipage}{1.0\linewidth}%
+				\bodytext{#7}%
+				\par%
+			\end{minipage}\vspace{0.1\baselineskip}%
+			\global\def\GLOBALinstitutionshortend {false}%
+		\fi%
+	\end{indentsectiondouble}
+}
+
+% Entrada en institución
+%	#1	Cargo
+%	#2	Fecha inicial
+%	#3	Fecha final
+%	#4	Descripción
+\newcommand{\institutionentry}[4]{%
+	\newinstitutionentry{#1}{#2 }{ #3}{\dateseparator}{.687\linewidth}{.31\linewidth}{#4}%
+}
+
+% Entrada en institución con fecha corta
+%	#1	Cargo
+%	#2	Fecha inicial
+%	#3	Fecha final
+%	#4	Descripción
+\newcommand{\institutionentryshort}[4]{%
+	\newinstitutionentry{#1}{#2 }{ #3}{\dateseparator}{.833\linewidth}{.163\linewidth}{#4}%
+}
+
+% Entrada en institución sin fecha
+%	#1	Cargo
+%	#2	Descripción
+\newcommand{\institutionentrynodate}[2]{%
+	\newinstitutionentry{#1}{}{}{}{\linewidth}{0\linewidth}{#2}%
+}
+
+% Otro tipo de entrada en cvblock
+%	#1	Título
+%	#2	Contenido
+\newcommand{\otherentry}[2]{%
+	\begin{basedescript}%
+		{\setlength{\leftmargin}{\doubleparindent}}%
+		\item[\hspace{\newparindent}\textcolor{\otherentrytitlecolor}{\textbf{#1}}] #2%
+	\end{basedescript}
+}
+
+% Inserta un elemento en el bloque de firma
+%	#1	Elemento en la firma
+\newcommand{\signatureentry}[1]{%
+	\texttt{\MakeUppercase{#1}} \\%
+}
+
+% Crea un bull
+\newcommand{\sbullet}{%
+	\ \ \raisebox{0.11em}[-1em][-1em]{\tiny $\bullet$} \ \ %
+}
+
+% Variaciones de vspace
+\newcommand{\breakvspace}[1]{%
+	\pagebreak[2] \vspace{#1} \pagebreak[2]%
+}
+\newcommand{\nobreakvspace}[1]{%
+	\nopagebreak[4] \vspace{#1} \nopagebreak[4]%
+}
+
+% Apóstrofe
+\newcommand{\apo}{%
+	\raisebox{-.18ex}{'}{\hspace{-.1em}}%
+}
+
+% Inserta un texto entre comillas
+\newcommand{\quotes}[1]{%
+	\enquote*{#1}%
+}
+
+% Inserta un texto entre comillas y negrita
+%	#1 	Texto
+\newcommand{\quotesbf}[1]{%
+	\quotes{\textbf{#1}}%
+}
+
+% Inserta un texto entre comillas e itálico
+%	#1 	Texto
+\newcommand{\quotesit}[1]{%
+	\quotes{\textit{#1}}%
+}
+
+% Inserta un texto entre comillas y typewriter
+%	#1 	Texto
+\newcommand{\quotesttt}[1]{%
+	\quotes{\texttt{#1}}%
+}
+
+% Inserta un texto entre comillas dobles
+%	#1 	Texto
+\newcommand{\doublequotes}[1]{%
+	\enquote{#1}%
+}
+
+% Inserta un texto con el formato de enlace
+% 	#1 	Enlace
+\newcommand{\hreftext}[1]{%
+	\ifthenelse{\equal{\fonturl}{same}}{%
+		#1%
+	}{%
+	\ifthenelse{\equal{\fonturl}{tt}}{%
+		\texttt{#1}%
+	}{%
+	\ifthenelse{\equal{\fonturl}{rm}}{%
+		\textrm{#1}%
+	}{%
+	\ifthenelse{\equal{\fonturl}{sf}}{%
+		\textsf{#1}%
+	}{}}}}%
+}
+
+% Inserta un email con un link cliqueable
+\newcommand{\insertemail}[1]{%
+	\href{mailto:#1}{\hreftext{#1}}%
+}
+
+% Inserta un teléfono celular
+\newcommand{\insertphone}[1]{%
+	\href{tel:#1}{\hreftext{#1}}%
+}
+
+% Actualiza el padding de las celdas de las tablas
+%	#1	Padding horizontal (em)
+%	#2	Padding vertical (em)
+\newcommand{\settablecellpadding}[2]{%
+	\emptyvarerr{\settablecellpadding}{#1}{Padding horizontal no definido}%
+	\emptyvarerr{\settablecellpadding}{#2}{Padding vertical no definido}%
+	\setlength{\tabcolsep}{#1 em} % Horizontal
+	\def\arraystretch {#2} % Vertical
+}
+
+% Definición de colores
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.92}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codegreen}{rgb}{0, 0.6, 0}
+\definecolor{codepurple}{rgb}{0.58, 0, 0.82}
+\definecolor{dark-blue}{rgb}{0.15, 0.15, 0.40}
+\definecolor{dgray}{RGB}{104, 108, 113}
+\definecolor{dkgreen}{rgb}{0, 0.6, 0}
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{lbrown}{RGB}{255, 252, 249}
+\definecolor{lgray}{RGB}{180, 180, 180}
+\definecolor{lyellow}{rgb}{1.0, 1.0, 0.88}
+\definecolor{mauve}{rgb}{0.58, 0, 0.82}
+\definecolor{mygray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{mygreen}{rgb}{0, 0.6, 0}
+\definecolor{mylilas}{RGB}{170, 55, 241}
+\definecolor{ocre}{RGB}{243, 102, 25}
+
+% Definición de variables globales
+\global\def\GLOBALinstitutionenabled {false}
+\global\def\GLOBALinstitutionicon {}
+\global\def\GLOBALinstitutionshortend {false}
+
+% Crea una sección identada
+\newenvironment{indentsection}{%
+	\begin{list}{}{%
+		\setlength{\leftmargin}{0.75\newparindent}%
+		\setlength{\parsep}{0pt}%
+		\setlength{\parskip}{0pt}%
+		\setlength{\itemsep}{0pt}%
+		\setlength{\topsep}{0pt}}%
+	}{%
+	\end{list}
+}
+
+% Crea una sección identada doble
+\newenvironment{indentsectiondouble}{%
+	\begin{list}{}{%
+			\setlength{\leftmargin}{1.5\newparindent}%
+			\setlength{\parsep}{0pt}%
+			\setlength{\parskip}{0pt}%
+			\setlength{\itemsep}{0pt}%
+			\setlength{\topsep}{0pt}}%
+	}{%
+	\end{list}
+}
+
+% Crea un bloque de contenido
+%	#1	Título
+%	#2	Estilo de línea
+\newenvironment{cvblock}[2][]{%
+	\needspace{1\baselineskip}%
+	\textcolor{\cvblocklinecolor}{%
+		\ifx\hfuzz#1\hfuzz%
+			\hrule%
+		\else%
+			\ifthenelse{\equal{#1}{..}}{%
+				\noindent%
+				\hspace*{-1.65em}%
+				\makebox[1.01\textwidth][l]{\dotfill}%
+				\vspace{-2em}
+			}{%
+			\ifthenelse{\equal{#1}{none}}{%
+				\vspace{-1em}%
+			}{%
+				\throwwarning{Estilo de linea invalido}%
+				\stop%
+			}}%
+		\fi%
+	}%
+	\ifx\hfuzz#2\hfuzz%
+		\throwwarning{Titulo del bloque no definido}%
+		\stop%
+	\else%
+		\roottitle{#2}%
+	\fi%
+	\vspace{0.15em}%
+	\global\def\GLOBALhasinstitution {false}%
+	\global\def\GLOBALinstitutionshortend {false}%
+	}{%
+	\ifthenelse{\equal{\GLOBALhasinstitution}{false}}{}{%
+		\ifthenelse{\equal{\GLOBALinstitutionshortend}{false}}{%
+			\vspace{0.45\baselineskip}%
+		}{%
+			\vspace{-0.7\baselineskip}%
+		}%
+	}%
+	\par%
+}
+
+% Párrafo de descripción
+%	#1	Estilo de línea
+\newenvironment{summary}[1][]{%
+	\begin{cvblock}[#1]{\nomsummary}%
+		\begingroup%
+		\vspace{-1em}%
+		\begin{multicols}{2}%
+			\noindent%
+		}{%
+		\end{multicols}
+		\vspace{-0.75\baselineskip}%
+		\par%
+		\endgroup%
+	\end{cvblock}
+	\vspace{0.49\baselineskip}%
+}
+
+% Párrafo de descripción
+%	#1	Estilo de línea
+\newenvironment{summarynocol}[1][]{%
+	\begin{cvblock}[#1]{\nomsummary}%
+		\begingroup%
+		}{%
+		\par%
+		\endgroup%
+	\end{cvblock}
+	\vspace{0.49\baselineskip}%
+}
+
+% Párrafo de descripción con foto de perfil
+%	#1	Estilo de línea
+\newenvironment{photosummary}[1][]{%
+	\begin{cvblock}[#1]{\nomsummary}%
+		\vspace{0.1em}%
+		\noindent%
+		\begin{minipage}[t]{\userphotosize cm}%
+			\begin{flushleft}%
+				\begingroup%
+				\setlength{\fboxsep}{0pt}%
+				~ \\ \vspace{-0.75em}%
+				\ifthenelse{\equal{\showuserphotoborder}{true}}{%
+					\noindent \textcolor{\userphotobordercolor}{\fbox{\includegraphics[width=0.99\linewidth]{\photo}}}%
+				}{%
+					\noindent \includegraphics[width=\userphotosize cm,height=\userphotosize cm]{\photo}%
+				}%
+				\vspace{-0.7em}%
+				\endgroup%
+			\end{flushleft}
+		\end{minipage}
+		\hspace*{0.54cm}%
+		\begingroup%
+		\def\arraystretch{1.3}%
+		\begin{minipage}[t]{\dimexpr\linewidth-\userphotosize cm-0.57cm}%
+		}{%
+		\end{minipage}
+		\endgroup%
+		\par%
+	\end{cvblock}
+	\vspace{1.6em}%
+}
+
+% Tabla de datos personales
+%	#1	Estilo de línea
+\newenvironment{personaltabledata}[1][]{%
+	\begin{cvblock}[#1]{\nompersonaldata}%
+		\vspace{0.1em}%
+		\noindent%
+		\ifthenelse{\equal{\personaltabledatapic}{true}}{%
+			\begin{minipage}[t]{\userphotosize cm}%
+				\begin{flushleft}%
+					\begingroup%
+					\setlength{\fboxsep}{0pt}%
+					~ \\ \vspace{-0.95em}%
+					\ifthenelse{\equal{\showuserphotoborder}{true}}{%
+						\noindent \textcolor{\userphotobordercolor}{\fbox{\includegraphics[width=0.99\linewidth]{\photo}}}%
+					}{%
+						\noindent \includegraphics[width=\userphotosize cm,height=\userphotosize cm]{\photo}%
+					}%
+					\endgroup%
+				\end{flushleft}
+			\end{minipage}
+		}{}%
+		\hspace*{0.34cm}%
+		\begingroup%
+		\def\arraystretch{1.3}%
+		\begin{minipage}[t]{\linewidth-\userphotosize cm-0.37cm}%
+			\vspace{-0.95cm}%
+			\begin{table}[H]%
+				\begin{tabular}{ll}%
+				}{%
+				\end{tabular}
+			\end{table}
+		\end{minipage}
+		\endgroup%
+		\par%
+	\end{cvblock}
+	\vspace{1.15em}%
+}
+
+% Nueva institución
+%	#1	Opcional: url o link institución
+%	#2	Nombre institución
+%	#3	Ubicación institución
+\newenvironment{institution}[3][]{%
+	\needspace{2\baselineskip}%
+	\ifthenelse{\equal{\institutiontitlebold}{true}}{%
+		\def\LOCALinstitutiontitle {\textbf{#2}}%
+	}{%
+		\def\LOCALinstitutiontitle {#2}%
+	}%
+	\nopagebreak[4]%
+	\hypersetup{urlcolor=\instnamecolor}%
+	\begin{indentsection}%
+		\item []%
+		\noindent%
+		\ifx\hfuzz#3\hfuzz%
+			\begin{minipage}{\linewidth}%
+				\GLOBALinstitutionicon%
+				\ifx\hfuzz#1\hfuzz%
+					\textscale{1.1}{\textcolor{\instnamecolor}{\LOCALinstitutiontitle}}%
+				\else%
+					\textscale{1.1}{\href{#1}{\LOCALinstitutiontitle}}%
+				\fi%
+			\end{minipage}
+		\else%
+			\begin{minipage}[t][][t]{.558\linewidth}%
+				\GLOBALinstitutionicon%
+				\ifx\hfuzz#1\hfuzz%
+					\textscale{1.1}{\textcolor{\instnamecolor}{\LOCALinstitutiontitle}}%
+				\else%
+					\textscale{1.1}{\href{#1}{\LOCALinstitutiontitle}}%
+				\fi%
+			\end{minipage}
+			\begin{minipage}[t][][t]{.44\linewidth}%
+				\begin{flushright}%
+					\noindent \textcolor{\instregioncolor}{\textsc{#3}}%
+				\end{flushright}
+			\end{minipage}
+		\fi%
+		\vspace{-\baselineskip}%
+		\break%
+	\end{indentsection}
+	\hypersetup{urlcolor=\urlcolor}%
+	\vspace{-1.5\baselineskip}%
+	\noindent%
+	\global\def\GLOBALinstitutionicon {}%
+	\global\def\GLOBALinstitutionenabled {true}
+	}{%
+	\global\def\GLOBALinstitutionenabled {false}%
+	\global\def\GLOBALhasinstitution {true}%
+	\par%
+	\vspace{0.2\baselineskip}%
+	\nopagebreak[4]%
+}
+
+% Nueva institución con ícono
+%	#1	Opcional: url o link institución
+%	#2	Nombre institución
+%	#3	Ubicación institución
+%	#4	Ícono de la institución
+\newenvironment{institutionicon}[4][]{%
+	\ifthenelse{\equal{\institutioniconsize}{small}}{%
+		\global\def\GLOBALinstitutionicon {\raisebox{-0.01\baselineskip}{\includegraphics[height=0.65\baselineskip,width=0.65\baselineskip]{#4}}\hspace{0.5em}}%
+	}{%
+	\ifthenelse{\equal{\institutioniconsize}{normal}}{%
+		\global\def\GLOBALinstitutionicon {\raisebox{-0.15\baselineskip}{\includegraphics[height=1\baselineskip,width=1\baselineskip]{#4}}\hspace{0.65em}}%
+	}{%
+	\ifthenelse{\equal{\institutioniconsize}{large}}{%
+		\global\def\GLOBALinstitutionicon {\raisebox{-0.25\baselineskip}{\includegraphics[height=1.25\baselineskip,width=1.25\baselineskip]{#4}}\hspace{0.75em}}%
+	}{%
+		\throwbadconfigondoc{Configuracion tamano icono incorrecto}{\institutioniconsize}{small,normal,large}}}%
+	}%
+	\begin{institution}[#1]{#2}{#3}%
+}{%
+	\end{institution}
+}
+
+% Crea la firma del usuario
+\newenvironment{signature}{%
+	\vfill%
+	\begin{flushright}%
+		\begin{tabular}{c}%
+			\includegraphics[width=\usersignaturesize cm]{\sign} \\%
+		}{%
+		\end{tabular}
+	\end{flushright}
+	\vspace{-1em}%
+}
+
+% Itemize en negrita
+%	#1	Parámetros opcionales
+\newenvironment{itemizebf}[1][]{%
+	\begin{itemize}[font=\bfseries,#1]%
+	}{%
+	\end{itemize}
+}
+
+% Enumerate en negrita
+%	#1	Parámetros opcionales
+\newenvironment{enumeratebf}[1][]{%
+	\begin{enumerate}[font=\bfseries,#1]%
+	}{%
+	\end{enumerate}
+}
+
+% -----------------------------------------------------------------------------
+% CONFIGURACIÓN INICIAL DEL DOCUMENTO
+% -----------------------------------------------------------------------------
+% Se revisa si las variables no han sido borradas
+\checkvardefined{\birthday}
+\checkvardefined{\birthmonth}
+\checkvardefined{\birthyear}
+\checkvardefined{\email}
+\checkvardefined{\name}
+\checkvardefined{\phonenumber}
+
+% Se añade \xspace a las variables
+\makeatletter
+	\g@addto@macro\birthday\xspace
+	\g@addto@macro\birthmonth\xspace
+	\g@addto@macro\birthyear\xspace
+	\g@addto@macro\name\xspace
+	\g@addto@macro\phonenumber\xspace
+\makeatother
+
+% Se define metadata del pdf
+\ifthenelse{\equal{\cfgshowbookmarkmenu}{true}}{
+	\def\cdfpagemodepdf {UseOutlines}
+}{
+	\def\cdfpagemodepdf {UseNone}
+}
+\hypersetup{
+	keeppdfinfo,
+	bookmarksopen={\cfgpdfbookmarkopen},
+	bookmarksopenlevel={\cfgbookmarksopenlevel},
+	bookmarkstype={toc},
+	pdfauthor={\name},
+	pdfcenterwindow={\cfgpdfcenterwindow},
+	pdfcopyright={\headertitle, \name. Email: \email. Phone: \phonenumber},
+	pdfcreator={LaTeX},
+	pdfdisplaydoctitle={\cfgpdfdisplaydoctitle},
+	pdffitwindow={\cfgpdffitwindow},
+	pdfinfo={
+		Author.Email={\email},
+		Author.Name={\name},
+		Author.Phone={\phonenumber},
+		Template.Author.Alias={ppizarror},
+		Template.Author.Email={pablo@ppizarror.com},
+		Template.Author.Name={Pablo Pizarro R.},
+		Template.Author.Web={https://ppizarror.com/},
+		Template.Date={04/06/2022},
+		Template.Encoding={UTF-8},
+		Template.License.Type={MIT},
+		Template.License.Web={https://opensource.org/licenses/MIT/},
+		Template.Name={Professional-CV},
+		Template.Type={Normal},
+		Template.Version.Dev={3.2.3-1},
+		Template.Version.Hash={097AFEA40607232C513AC84021ED0832},
+		Template.Version.Release={3.2.3},
+		Template.Web.Dev={https://github.com/Template-Latex/Professional-CV/},
+		Template.Web.Manual={https://latex.ppizarror.com/Professional-CV/}
+	},
+	pdfkeywords={CV, \name, \headertitle, \email},
+	pdfmenubar={\cfgpdfmenubar},
+	pdfpagelayout={\cfgpdfpagemode},
+	pdfpagemode={\cdfpagemodepdf},
+	pdfproducer={Professional-CV v3.2.3 | (Pablo Pizarro R.) ppizarror.com},
+	pdfremotestartview={Fit},
+	pdfstartpage={1},
+	pdfstartview={\cfgpdfpageview},
+	pdfsubject={CV \name},
+	pdftitle={\headertitle~ \name},
+	pdftoolbar={\cfgpdftoolbar},
+	pdftype={Text}
+}
+
+% Establece la carpeta de imágenes por defecto
+\graphicspath{{./img}}
+
+% Ajuste del entrelineado
+\renewcommand{\baselinestretch}{\documentinterline}
+
+% Ajuste de tablas
+\settablecellpadding{0.5}{1}
+
+% Configuración de los colores
+\color{\maintextcolor} % Color principal
+\arrayrulecolor{\tablelinecolor} % Color de las líneas de las tablas
+\sethlcolor{\highlightcolor} % Color del subrayado por defecto
+\ifthenelse{\equal{\showborderonlinks}{true}}{
+	\hypersetup{
+		% Color de links con borde
+		citebordercolor=\numcitecolor,
+		linkbordercolor=\urlcolor,
+		urlbordercolor=\urlcolor
+	}
+}{
+	\hypersetup{
+		% Color de links sin borde
+		hidelinks,
+		colorlinks=true,
+		citecolor=\numcitecolor,
+		filecolor=\urlcolor,
+		linkcolor=\urlcolor,
+		urlcolor=\urlcolor
+	}
+}
+\ifthenelse{\equal{\colorpage}{white}}{}{
+	\pagecolor{\colorpage}
+}
+
+% Configuración de la identación
+\newlength{\newparindent}
+\addtolength{\newparindent}{\parindent}
+\newlength{\doubleparindent}
+\addtolength{\doubleparindent}{\parindent}
+\addtolength{\doubleparindent}{\parindent}
+
+% Configuración de hbox y vbox
+\hfuzz=200pt
+\vfuzz=200pt
+\hbadness=\maxdimen
+\vbadness=\maxdimen
+
+% Se activa el word-wrap para textos con \texttt{}
+\ttfamily \hyphenchar\the\font=`\-
+
+% Se define el tipo de texto de los url
+\urlstyle{\fonturl}
+
+% Se define la versión menor a compilar
+\ifthenelse{\equal{\compilertype}{pdf2latex}}{
+	% Nivel de compresión
+	\pdfcompresslevel=9
+	
+	% El óptimo es 2, según
+	% https://texdoc.org/serve/pdftex-a.pdf/0 p.20
+	\pdfdecimaldigits=2
+	
+	% Inclusión de PDF
+	\pdfinclusionerrorlevel=0
+	
+	% Versión
+	\pdfminorversion=\pdfcompileversion
+	
+	% Compresión de objetos
+	\pdfobjcompresslevel=2
+}{}
+
+% Configura items
+\AfterEndEnvironment{itemize}{\vspace{-0.4\baselineskip}}
+\AfterEndEnvironment{enumerate}{\vspace{-0.4\baselineskip}}
+
+% -----------------------------------------------------------------------------
+% DECLARACIÓN DE CARACTERES ADICIONALES UNICODE
+% -----------------------------------------------------------------------------
+% Definición letras griegas
+\def\Alpha{A}
+\def\Beta{B}
+\def\Chi{X}
+\def\Epsilon{E}
+\def\Eta{H}
+\def\Iota{I}
+\def\Kappa{K}
+\def\Mu{M}
+\def\Nu{N}
+\def\Omicron{O}
+\def\omicron{o}
+\def\Rho{P}
+\def\Tau{T}
+\def\Zeta{Z}
+
+\def\LOCALunknownchar {\ensuremath{\mathrm{UNKNOWN\;CHAR}}}
+
+% Definición de símbolos
+\makeatletter
+\newsavebox{\@brxanglelr}
+\newcommand{\llangle}[1][]{\savebox{\@brxanglelr}{\(\m@th{#1\langle}\)}%
+	\mathopen{\copy\@brxanglelr\kern-0.5\wd\@brxanglelr\usebox{\@brxanglelr}}}
+\newcommand{\rrangle}[1][]{\savebox{\@brxanglelr}{\(\m@th{#1\rangle}\)}%
+	\mathclose{\copy\@brxanglelr\kern-0.5\wd\@brxanglelr\usebox{\@brxanglelr}}}
+\makeatother
+
+% Creación de comandos si no existen
+\ifx\DeclareUnicodeCharacter\undefined%
+	\def\DeclareUnicodeCharacter#1#2{%
+		\def\tmp{#2}\uccode`\~="#1 \catcode"#1 \active%
+		\uppercase{\global\let~\tmp}%
+		\uccode`\~=0%
+	}
+\fi%
+\ifx\mapsfrom\undefined%
+	\newcommand\mapsfrom{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}%
+\fi%
+
+% Agrega caracteres unicode
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{000B}{~}
+\DeclareUnicodeCharacter{00A0}{~}
+\DeclareUnicodeCharacter{00A1}{\textexclamdown}
+\DeclareUnicodeCharacter{00A2}{\textcent}
+\DeclareUnicodeCharacter{00A3}{\pounds}
+\DeclareUnicodeCharacter{00A4}{\textcurrency}
+\DeclareUnicodeCharacter{00A5}{\textyen}
+\DeclareUnicodeCharacter{00A6}{\textbrokenbar}
+\DeclareUnicodeCharacter{00A7}{{\mathhexbox 278}}
+\DeclareUnicodeCharacter{00A8}{\"{ }}
+\DeclareUnicodeCharacter{00A9}{\copyright}
+\DeclareUnicodeCharacter{00AA}{\textordfeminine}
+\DeclareUnicodeCharacter{00AB}{\guillemotleft}
+\DeclareUnicodeCharacter{00AC}{\ensuremath{\neg}}
+\DeclareUnicodeCharacter{00AE}{\textregistered}
+\DeclareUnicodeCharacter{00AF}{\textasciimacron}
+\DeclareUnicodeCharacter{00B0}{\textsuperscript{o}}
+\DeclareUnicodeCharacter{00B1}{\ensuremath{\pm}}
+\DeclareUnicodeCharacter{00B2}{\textsuperscript{2}}
+\DeclareUnicodeCharacter{00B3}{\textsuperscript{3}}
+\DeclareUnicodeCharacter{00B5}{\textmu}
+\DeclareUnicodeCharacter{00B6}{{\mathhexbox 27B}}
+\DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{00B9}{\textsuperscript{1}}
+\DeclareUnicodeCharacter{00BA}{\textordmasculine}
+\DeclareUnicodeCharacter{00BB}{\guillemotright}
+\DeclareUnicodeCharacter{00BC}{\ensuremath{\frac{1}{4}}}
+\DeclareUnicodeCharacter{00BD}{\ensuremath{\frac{1}{2}}}
+\DeclareUnicodeCharacter{00BE}{\ensuremath{\frac{3}{4}}}
+\DeclareUnicodeCharacter{00BF}{\textquestiondown}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{00F7}{\ensuremath{\div}}
+\DeclareUnicodeCharacter{0131}{\ensuremath{\imath}}
+\DeclareUnicodeCharacter{02102}{\ensuremath{\mathbb{C}}}
+\DeclareUnicodeCharacter{0210D}{\ensuremath{\mathbb{H}}}
+\DeclareUnicodeCharacter{02115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{02119}{\ensuremath{\mathbb{P}}}
+\DeclareUnicodeCharacter{0211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{0211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{02124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{0237}{\ensuremath{\jmath}}
+\DeclareUnicodeCharacter{02B0}{\ensuremath{^h}}
+\DeclareUnicodeCharacter{02B2}{\ensuremath{^j}}
+\DeclareUnicodeCharacter{02B3}{\ensuremath{^r}}
+\DeclareUnicodeCharacter{02B7}{\ensuremath{^w}}
+\DeclareUnicodeCharacter{02B8}{\ensuremath{^y}}
+\DeclareUnicodeCharacter{02E1}{\ensuremath{^l}}
+\DeclareUnicodeCharacter{02E2}{\ensuremath{^s}}
+\DeclareUnicodeCharacter{02E3}{\ensuremath{^x}}
+\DeclareUnicodeCharacter{0302}{\ensuremath{\hat{\phantom{x}}}}
+\DeclareUnicodeCharacter{0308}{\ensuremath{\ddot{\phantom{x}}}}
+\DeclareUnicodeCharacter{0332}{\ensuremath{\underline{\phantom{x}}}}
+\DeclareUnicodeCharacter{0391}{\ensuremath{\Alpha}}
+\DeclareUnicodeCharacter{0392}{\ensuremath{\Beta}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{0395}{\ensuremath{\Epsilon}}
+\DeclareUnicodeCharacter{0396}{\ensuremath{\Zeta}}
+\DeclareUnicodeCharacter{0397}{\ensuremath{\Eta}}
+\DeclareUnicodeCharacter{0398}{\ensuremath{\Theta}}
+\DeclareUnicodeCharacter{0399}{\Iota}
+\DeclareUnicodeCharacter{039A}{\Kappa}
+\DeclareUnicodeCharacter{039B}{\ensuremath{\Lambda}}
+\DeclareUnicodeCharacter{039C}{\Mu}
+\DeclareUnicodeCharacter{039D}{\Nu}
+\DeclareUnicodeCharacter{039E}{\ensuremath{\Xi}}
+\DeclareUnicodeCharacter{039F}{\Omicron}
+\DeclareUnicodeCharacter{03A0}{\ensuremath{\Pi}}
+\DeclareUnicodeCharacter{03A1}{\Rho}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A4}{\Tau}
+\DeclareUnicodeCharacter{03A5}{\ensuremath{\Upsilon}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{03A7}{\Chi}
+\DeclareUnicodeCharacter{03A8}{\ensuremath{\Psi}}
+\DeclareUnicodeCharacter{03A9}{\ensuremath{\Omega}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{03B5}{\ensuremath{\varepsilon}}
+\DeclareUnicodeCharacter{03B6}{\ensuremath{\zeta}}
+\DeclareUnicodeCharacter{03B7}{\ensuremath{\eta}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03B9}{\ensuremath{\iota}}
+\DeclareUnicodeCharacter{03BA}{\ensuremath{\kappa}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03BD}{\ensuremath{\nu}}
+\DeclareUnicodeCharacter{03BE}{\ensuremath{\xi}}
+\DeclareUnicodeCharacter{03BF}{\omicron}
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03C2}{\ensuremath{\varsigma}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03C4}{\ensuremath{\tau}}
+\DeclareUnicodeCharacter{03C5}{\ensuremath{\upsilon}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03C7}{\ensuremath{\chi}}
+\DeclareUnicodeCharacter{03C8}{\ensuremath{\psi}}
+\DeclareUnicodeCharacter{03C9}{\ensuremath{\omega}}
+\DeclareUnicodeCharacter{03D0}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03D1}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03D5}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03D6}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{03D8}{\ensuremath{Q}}
+\DeclareUnicodeCharacter{03D9}{\ensuremath{q}}
+\DeclareUnicodeCharacter{03DA}{\ensuremath{S}}
+\DeclareUnicodeCharacter{03DB}{\ensuremath{s}}
+\DeclareUnicodeCharacter{03DC}{\ensuremath{D}}
+\DeclareUnicodeCharacter{03DD}{\ensuremath{d}}
+\DeclareUnicodeCharacter{03DE}{\ensuremath{K}}
+\DeclareUnicodeCharacter{03DF}{\ensuremath{k}}
+\DeclareUnicodeCharacter{03E0}{\ensuremath{S}}
+\DeclareUnicodeCharacter{03E1}{\ensuremath{s}}
+\DeclareUnicodeCharacter{03F0}{\ensuremath{\varkappa}}
+\DeclareUnicodeCharacter{03F1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03F5}{\ensuremath{\epsilon}}
+\DeclareUnicodeCharacter{03F6}{\ensuremath{\backepsilon}}
+\DeclareUnicodeCharacter{041F}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0432}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0435}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0438}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{043C}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0440}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0442}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0BA8}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{0BBF}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{1100}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{11F9}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{1D2C}{\ensuremath{^A}}
+\DeclareUnicodeCharacter{1D2E}{\ensuremath{^B}}
+\DeclareUnicodeCharacter{1D30}{\ensuremath{^D}}
+\DeclareUnicodeCharacter{1D31}{\ensuremath{^E}}
+\DeclareUnicodeCharacter{1D33}{\ensuremath{^G}}
+\DeclareUnicodeCharacter{1D34}{\ensuremath{^H}}
+\DeclareUnicodeCharacter{1D35}{\ensuremath{^I}}
+\DeclareUnicodeCharacter{1D36}{\ensuremath{^J}}
+\DeclareUnicodeCharacter{1D37}{\ensuremath{^K}}
+\DeclareUnicodeCharacter{1D38}{\ensuremath{^L}}
+\DeclareUnicodeCharacter{1D39}{\ensuremath{^M}}
+\DeclareUnicodeCharacter{1D3A}{\ensuremath{^N}}
+\DeclareUnicodeCharacter{1D3C}{\ensuremath{^O}}
+\DeclareUnicodeCharacter{1D3E}{\ensuremath{^P}}
+\DeclareUnicodeCharacter{1D3F}{\ensuremath{^R}}
+\DeclareUnicodeCharacter{1D40}{\ensuremath{^T}}
+\DeclareUnicodeCharacter{1D400}{\ensuremath{\mathbf{A}}}
+\DeclareUnicodeCharacter{1D401}{\ensuremath{\mathbf{B}}}
+\DeclareUnicodeCharacter{1D402}{\ensuremath{\mathbf{C}}}
+\DeclareUnicodeCharacter{1D403}{\ensuremath{\mathbf{D}}}
+\DeclareUnicodeCharacter{1D404}{\ensuremath{\mathbf{E}}}
+\DeclareUnicodeCharacter{1D405}{\ensuremath{\mathbf{F}}}
+\DeclareUnicodeCharacter{1D406}{\ensuremath{\mathbf{G}}}
+\DeclareUnicodeCharacter{1D407}{\ensuremath{\mathbf{H}}}
+\DeclareUnicodeCharacter{1D408}{\ensuremath{\mathbf{I}}}
+\DeclareUnicodeCharacter{1D409}{\ensuremath{\mathbf{J}}}
+\DeclareUnicodeCharacter{1D40A}{\ensuremath{\mathbf{K}}}
+\DeclareUnicodeCharacter{1D40B}{\ensuremath{\mathbf{L}}}
+\DeclareUnicodeCharacter{1D40C}{\ensuremath{\mathbf{M}}}
+\DeclareUnicodeCharacter{1D40D}{\ensuremath{\mathbf{N}}}
+\DeclareUnicodeCharacter{1D40E}{\ensuremath{\mathbf{O}}}
+\DeclareUnicodeCharacter{1D40F}{\ensuremath{\mathbf{P}}}
+\DeclareUnicodeCharacter{1D41}{\ensuremath{^U}}
+\DeclareUnicodeCharacter{1D410}{\ensuremath{\mathbf{Q}}}
+\DeclareUnicodeCharacter{1D411}{\ensuremath{\mathbf{R}}}
+\DeclareUnicodeCharacter{1D412}{\ensuremath{\mathbf{S}}}
+\DeclareUnicodeCharacter{1D413}{\ensuremath{\mathbf{T}}}
+\DeclareUnicodeCharacter{1D414}{\ensuremath{\mathbf{U}}}
+\DeclareUnicodeCharacter{1D415}{\ensuremath{\mathbf{V}}}
+\DeclareUnicodeCharacter{1D416}{\ensuremath{\mathbf{W}}}
+\DeclareUnicodeCharacter{1D417}{\ensuremath{\mathbf{X}}}
+\DeclareUnicodeCharacter{1D418}{\ensuremath{\mathbf{Y}}}
+\DeclareUnicodeCharacter{1D419}{\ensuremath{\mathbf{Z}}}
+\DeclareUnicodeCharacter{1D41A}{\ensuremath{\mathbf{a}}}
+\DeclareUnicodeCharacter{1D41B}{\ensuremath{\mathbf{b}}}
+\DeclareUnicodeCharacter{1D41C}{\ensuremath{\mathbf{c}}}
+\DeclareUnicodeCharacter{1D41D}{\ensuremath{\mathbf{d}}}
+\DeclareUnicodeCharacter{1D41E}{\ensuremath{\mathbf{e}}}
+\DeclareUnicodeCharacter{1D41F}{\ensuremath{\mathbf{f}}}
+\DeclareUnicodeCharacter{1D42}{\ensuremath{^W}}
+\DeclareUnicodeCharacter{1D420}{\ensuremath{\mathbf{g}}}
+\DeclareUnicodeCharacter{1D421}{\ensuremath{\mathbf{h}}}
+\DeclareUnicodeCharacter{1D422}{\ensuremath{\mathbf{i}}}
+\DeclareUnicodeCharacter{1D423}{\ensuremath{\mathbf{j}}}
+\DeclareUnicodeCharacter{1D424}{\ensuremath{\mathbf{k}}}
+\DeclareUnicodeCharacter{1D425}{\ensuremath{\mathbf{l}}}
+\DeclareUnicodeCharacter{1D426}{\ensuremath{\mathbf{m}}}
+\DeclareUnicodeCharacter{1D427}{\ensuremath{\mathbf{n}}}
+\DeclareUnicodeCharacter{1D428}{\ensuremath{\mathbf{o}}}
+\DeclareUnicodeCharacter{1D429}{\ensuremath{\mathbf{p}}}
+\DeclareUnicodeCharacter{1D42A}{\ensuremath{\mathbf{q}}}
+\DeclareUnicodeCharacter{1D42B}{\ensuremath{\mathbf{r}}}
+\DeclareUnicodeCharacter{1D42C}{\ensuremath{\mathbf{s}}}
+\DeclareUnicodeCharacter{1D42D}{\ensuremath{\mathbf{t}}}
+\DeclareUnicodeCharacter{1D42E}{\ensuremath{\mathbf{u}}}
+\DeclareUnicodeCharacter{1D42F}{\ensuremath{\mathbf{v}}}
+\DeclareUnicodeCharacter{1D43}{\ensuremath{^a}}
+\DeclareUnicodeCharacter{1D430}{\ensuremath{\mathbf{w}}}
+\DeclareUnicodeCharacter{1D431}{\ensuremath{\mathbf{x}}}
+\DeclareUnicodeCharacter{1D432}{\ensuremath{\mathbf{y}}}
+\DeclareUnicodeCharacter{1D433}{\ensuremath{\mathbf{z}}}
+\DeclareUnicodeCharacter{1D434}{\ensuremath{\mathit{A}}}
+\DeclareUnicodeCharacter{1D435}{\ensuremath{\mathit{B}}}
+\DeclareUnicodeCharacter{1D436}{\ensuremath{\mathit{C}}}
+\DeclareUnicodeCharacter{1D437}{\ensuremath{\mathit{D}}}
+\DeclareUnicodeCharacter{1D438}{\ensuremath{\mathit{E}}}
+\DeclareUnicodeCharacter{1D439}{\ensuremath{\mathit{F}}}
+\DeclareUnicodeCharacter{1D43A}{\ensuremath{\mathit{G}}}
+\DeclareUnicodeCharacter{1D43B}{\ensuremath{\mathit{H}}}
+\DeclareUnicodeCharacter{1D43C}{\ensuremath{\mathit{I}}}
+\DeclareUnicodeCharacter{1D43D}{\ensuremath{\mathit{J}}}
+\DeclareUnicodeCharacter{1D43E}{\ensuremath{\mathit{K}}}
+\DeclareUnicodeCharacter{1D43F}{\ensuremath{\mathit{L}}}
+\DeclareUnicodeCharacter{1D440}{\ensuremath{\mathit{M}}}
+\DeclareUnicodeCharacter{1D441}{\ensuremath{\mathit{N}}}
+\DeclareUnicodeCharacter{1D442}{\ensuremath{\mathit{O}}}
+\DeclareUnicodeCharacter{1D443}{\ensuremath{\mathit{P}}}
+\DeclareUnicodeCharacter{1D444}{\ensuremath{\mathit{Q}}}
+\DeclareUnicodeCharacter{1D445}{\ensuremath{\mathit{R}}}
+\DeclareUnicodeCharacter{1D446}{\ensuremath{\mathit{S}}}
+\DeclareUnicodeCharacter{1D447}{\ensuremath{\mathit{T}}}
+\DeclareUnicodeCharacter{1D448}{\ensuremath{\mathit{U}}}
+\DeclareUnicodeCharacter{1D449}{\ensuremath{\mathit{V}}}
+\DeclareUnicodeCharacter{1D44A}{\ensuremath{\mathit{W}}}
+\DeclareUnicodeCharacter{1D44B}{\ensuremath{\mathit{X}}}
+\DeclareUnicodeCharacter{1D44C}{\ensuremath{\mathit{Y}}}
+\DeclareUnicodeCharacter{1D44D}{\ensuremath{\mathit{Z}}}
+\DeclareUnicodeCharacter{1D44E}{\ensuremath{\mathit{a}}}
+\DeclareUnicodeCharacter{1D44F}{\ensuremath{\mathit{b}}}
+\DeclareUnicodeCharacter{1D450}{\ensuremath{\mathit{c}}}
+\DeclareUnicodeCharacter{1D451}{\ensuremath{\mathit{d}}}
+\DeclareUnicodeCharacter{1D452}{\ensuremath{\mathit{e}}}
+\DeclareUnicodeCharacter{1D453}{\ensuremath{\mathit{f}}}
+\DeclareUnicodeCharacter{1D454}{\ensuremath{\mathit{g}}}
+\DeclareUnicodeCharacter{1D456}{\ensuremath{\mathit{i}}}
+\DeclareUnicodeCharacter{1D457}{\ensuremath{\mathit{j}}}
+\DeclareUnicodeCharacter{1D458}{\ensuremath{\mathit{k}}}
+\DeclareUnicodeCharacter{1D459}{\ensuremath{\mathit{l}}}
+\DeclareUnicodeCharacter{1D45A}{\ensuremath{\mathit{m}}}
+\DeclareUnicodeCharacter{1D45B}{\ensuremath{\mathit{n}}}
+\DeclareUnicodeCharacter{1D45C}{\ensuremath{\mathit{o}}}
+\DeclareUnicodeCharacter{1D45D}{\ensuremath{\mathit{p}}}
+\DeclareUnicodeCharacter{1D45E}{\ensuremath{\mathit{q}}}
+\DeclareUnicodeCharacter{1D45F}{\ensuremath{\mathit{r}}}
+\DeclareUnicodeCharacter{1D460}{\ensuremath{\mathit{s}}}
+\DeclareUnicodeCharacter{1D461}{\ensuremath{\mathit{t}}}
+\DeclareUnicodeCharacter{1D462}{\ensuremath{\mathit{u}}}
+\DeclareUnicodeCharacter{1D463}{\ensuremath{\mathit{v}}}
+\DeclareUnicodeCharacter{1D464}{\ensuremath{\mathit{w}}}
+\DeclareUnicodeCharacter{1D465}{\ensuremath{\mathit{x}}}
+\DeclareUnicodeCharacter{1D466}{\ensuremath{\mathit{y}}}
+\DeclareUnicodeCharacter{1D467}{\ensuremath{\mathit{z}}}
+\DeclareUnicodeCharacter{1D47}{\ensuremath{^b}}
+\DeclareUnicodeCharacter{1D48}{\ensuremath{^d}}
+\DeclareUnicodeCharacter{1D49}{\ensuremath{^e}}
+\DeclareUnicodeCharacter{1D49C}{\ensuremath{\mathscr{A}}}
+\DeclareUnicodeCharacter{1D49E}{\ensuremath{\mathscr{C}}}
+\DeclareUnicodeCharacter{1D49F}{\ensuremath{\mathscr{D}}}
+\DeclareUnicodeCharacter{1D4A2}{\ensuremath{\mathscr{G}}}
+\DeclareUnicodeCharacter{1D4A5}{\ensuremath{\mathscr{J}}}
+\DeclareUnicodeCharacter{1D4A6}{\ensuremath{\mathscr{K}}}
+\DeclareUnicodeCharacter{1D4A9}{\ensuremath{\mathscr{N}}}
+\DeclareUnicodeCharacter{1D4AA}{\ensuremath{\mathscr{O}}}
+\DeclareUnicodeCharacter{1D4AB}{\ensuremath{\mathscr{P}}}
+\DeclareUnicodeCharacter{1D4AC}{\ensuremath{\mathscr{Q}}}
+\DeclareUnicodeCharacter{1D4AE}{\ensuremath{\mathscr{S}}}
+\DeclareUnicodeCharacter{1D4AF}{\ensuremath{\mathscr{T}}}
+\DeclareUnicodeCharacter{1D4B0}{\ensuremath{\mathscr{U}}}
+\DeclareUnicodeCharacter{1D4B1}{\ensuremath{\mathscr{V}}}
+\DeclareUnicodeCharacter{1D4B2}{\ensuremath{\mathscr{W}}}
+\DeclareUnicodeCharacter{1D4B3}{\ensuremath{\mathscr{X}}}
+\DeclareUnicodeCharacter{1D4B4}{\ensuremath{\mathscr{Y}}}
+\DeclareUnicodeCharacter{1D4B5}{\ensuremath{\mathscr{Z}}}
+\DeclareUnicodeCharacter{1D4D}{\ensuremath{^g}}
+\DeclareUnicodeCharacter{1D4D0}{\ensuremath{\mathcal{A}}}
+\DeclareUnicodeCharacter{1D4D1}{\ensuremath{\mathcal{B}}}
+\DeclareUnicodeCharacter{1D4D2}{\ensuremath{\mathcal{C}}}
+\DeclareUnicodeCharacter{1D4D3}{\ensuremath{\mathcal{D}}}
+\DeclareUnicodeCharacter{1D4D4}{\ensuremath{\mathcal{E}}}
+\DeclareUnicodeCharacter{1D4D5}{\ensuremath{\mathcal{F}}}
+\DeclareUnicodeCharacter{1D4D6}{\ensuremath{\mathcal{G}}}
+\DeclareUnicodeCharacter{1D4D7}{\ensuremath{\mathcal{H}}}
+\DeclareUnicodeCharacter{1D4D8}{\ensuremath{\mathcal{I}}}
+\DeclareUnicodeCharacter{1D4D9}{\ensuremath{\mathcal{J}}}
+\DeclareUnicodeCharacter{1D4DA}{\ensuremath{\mathcal{K}}}
+\DeclareUnicodeCharacter{1D4DB}{\ensuremath{\mathcal{L}}}
+\DeclareUnicodeCharacter{1D4DC}{\ensuremath{\mathcal{M}}}
+\DeclareUnicodeCharacter{1D4DD}{\ensuremath{\mathcal{N}}}
+\DeclareUnicodeCharacter{1D4DE}{\ensuremath{\mathcal{O}}}
+\DeclareUnicodeCharacter{1D4DF}{\ensuremath{\mathcal{P}}}
+\DeclareUnicodeCharacter{1D4E0}{\ensuremath{\mathcal{Q}}}
+\DeclareUnicodeCharacter{1D4E1}{\ensuremath{\mathcal{R}}}
+\DeclareUnicodeCharacter{1D4E2}{\ensuremath{\mathcal{S}}}
+\DeclareUnicodeCharacter{1D4E3}{\ensuremath{\mathcal{T}}}
+\DeclareUnicodeCharacter{1D4E4}{\ensuremath{\mathcal{U}}}
+\DeclareUnicodeCharacter{1D4E5}{\ensuremath{\mathcal{V}}}
+\DeclareUnicodeCharacter{1D4E6}{\ensuremath{\mathcal{W}}}
+\DeclareUnicodeCharacter{1D4E7}{\ensuremath{\mathcal{X}}}
+\DeclareUnicodeCharacter{1D4E8}{\ensuremath{\mathcal{Y}}}
+\DeclareUnicodeCharacter{1D4E9}{\ensuremath{\mathcal{Z}}}
+\DeclareUnicodeCharacter{1D4F}{\ensuremath{^k}}
+\DeclareUnicodeCharacter{1D50}{\ensuremath{^m}}
+\DeclareUnicodeCharacter{1D504}{\ensuremath{\mathfrak{A}}}
+\DeclareUnicodeCharacter{1D505}{\ensuremath{\mathfrak{B}}}
+\DeclareUnicodeCharacter{1D507}{\ensuremath{\mathfrak{D}}}
+\DeclareUnicodeCharacter{1D508}{\ensuremath{\mathfrak{E}}}
+\DeclareUnicodeCharacter{1D509}{\ensuremath{\mathfrak{F}}}
+\DeclareUnicodeCharacter{1D50A}{\ensuremath{\mathfrak{G}}}
+\DeclareUnicodeCharacter{1D50D}{\ensuremath{\mathfrak{J}}}
+\DeclareUnicodeCharacter{1D50E}{\ensuremath{\mathfrak{K}}}
+\DeclareUnicodeCharacter{1D50F}{\ensuremath{\mathfrak{L}}}
+\DeclareUnicodeCharacter{1D510}{\ensuremath{\mathfrak{M}}}
+\DeclareUnicodeCharacter{1D511}{\ensuremath{\mathfrak{N}}}
+\DeclareUnicodeCharacter{1D512}{\ensuremath{\mathfrak{O}}}
+\DeclareUnicodeCharacter{1D513}{\ensuremath{\mathfrak{P}}}
+\DeclareUnicodeCharacter{1D514}{\ensuremath{\mathfrak{Q}}}
+\DeclareUnicodeCharacter{1D516}{\ensuremath{\mathfrak{S}}}
+\DeclareUnicodeCharacter{1D517}{\ensuremath{\mathfrak{T}}}
+\DeclareUnicodeCharacter{1D518}{\ensuremath{\mathfrak{U}}}
+\DeclareUnicodeCharacter{1D519}{\ensuremath{\mathfrak{V}}}
+\DeclareUnicodeCharacter{1D51A}{\ensuremath{\mathfrak{W}}}
+\DeclareUnicodeCharacter{1D51B}{\ensuremath{\mathfrak{X}}}
+\DeclareUnicodeCharacter{1D51C}{\ensuremath{\mathfrak{Y}}}
+\DeclareUnicodeCharacter{1D51E}{\ensuremath{\mathfrak{a}}}
+\DeclareUnicodeCharacter{1D51F}{\ensuremath{\mathfrak{b}}}
+\DeclareUnicodeCharacter{1D52}{\ensuremath{^o}}
+\DeclareUnicodeCharacter{1D520}{\ensuremath{\mathfrak{c}}}
+\DeclareUnicodeCharacter{1D521}{\ensuremath{\mathfrak{d}}}
+\DeclareUnicodeCharacter{1D522}{\ensuremath{\mathfrak{e}}}
+\DeclareUnicodeCharacter{1D523}{\ensuremath{\mathfrak{f}}}
+\DeclareUnicodeCharacter{1D524}{\ensuremath{\mathfrak{g}}}
+\DeclareUnicodeCharacter{1D525}{\ensuremath{\mathfrak{h}}}
+\DeclareUnicodeCharacter{1D526}{\ensuremath{\mathfrak{i}}}
+\DeclareUnicodeCharacter{1D527}{\ensuremath{\mathfrak{j}}}
+\DeclareUnicodeCharacter{1D528}{\ensuremath{\mathfrak{k}}}
+\DeclareUnicodeCharacter{1D529}{\ensuremath{\mathfrak{l}}}
+\DeclareUnicodeCharacter{1D52A}{\ensuremath{\mathfrak{m}}}
+\DeclareUnicodeCharacter{1D52B}{\ensuremath{\mathfrak{n}}}
+\DeclareUnicodeCharacter{1D52C}{\ensuremath{\mathfrak{o}}}
+\DeclareUnicodeCharacter{1D52D}{\ensuremath{\mathfrak{p}}}
+\DeclareUnicodeCharacter{1D52E}{\ensuremath{\mathfrak{q}}}
+\DeclareUnicodeCharacter{1D52F}{\ensuremath{\mathfrak{r}}}
+\DeclareUnicodeCharacter{1D530}{\ensuremath{\mathfrak{s}}}
+\DeclareUnicodeCharacter{1D531}{\ensuremath{\mathfrak{t}}}
+\DeclareUnicodeCharacter{1D532}{\ensuremath{\mathfrak{u}}}
+\DeclareUnicodeCharacter{1D533}{\ensuremath{\mathfrak{v}}}
+\DeclareUnicodeCharacter{1D534}{\ensuremath{\mathfrak{w}}}
+\DeclareUnicodeCharacter{1D535}{\ensuremath{\mathfrak{x}}}
+\DeclareUnicodeCharacter{1D536}{\ensuremath{\mathfrak{y}}}
+\DeclareUnicodeCharacter{1D537}{\ensuremath{\mathfrak{z}}}
+\DeclareUnicodeCharacter{1D538}{\ensuremath{\mathbb{A}}}
+\DeclareUnicodeCharacter{1D539}{\ensuremath{\mathbb{B}}}
+\DeclareUnicodeCharacter{1D53B}{\ensuremath{\mathbb{D}}}
+\DeclareUnicodeCharacter{1D53C}{\ensuremath{\mathbb{E}}}
+\DeclareUnicodeCharacter{1D53D}{\ensuremath{\mathbb{F}}}
+\DeclareUnicodeCharacter{1D53E}{\ensuremath{\mathbb{G}}}
+\DeclareUnicodeCharacter{1D540}{\ensuremath{\mathbb{I}}}
+\DeclareUnicodeCharacter{1D541}{\ensuremath{\mathbb{J}}}
+\DeclareUnicodeCharacter{1D542}{\ensuremath{\mathbb{K}}}
+\DeclareUnicodeCharacter{1D543}{\ensuremath{\mathbb{L}}}
+\DeclareUnicodeCharacter{1D544}{\ensuremath{\mathbb{M}}}
+\DeclareUnicodeCharacter{1D546}{\ensuremath{\mathbb{O}}}
+\DeclareUnicodeCharacter{1D54A}{\ensuremath{\mathbb{S}}}
+\DeclareUnicodeCharacter{1D54B}{\ensuremath{\mathbb{T}}}
+\DeclareUnicodeCharacter{1D54C}{\ensuremath{\mathbb{U}}}
+\DeclareUnicodeCharacter{1D54D}{\ensuremath{\mathbb{V}}}
+\DeclareUnicodeCharacter{1D54E}{\ensuremath{\mathbb{W}}}
+\DeclareUnicodeCharacter{1D54F}{\ensuremath{\mathbb{X}}}
+\DeclareUnicodeCharacter{1D550}{\ensuremath{\mathbb{Y}}}
+\DeclareUnicodeCharacter{1D552}{\ensuremath{\mathbb{a}}}
+\DeclareUnicodeCharacter{1D553}{\ensuremath{\mathbb{b}}}
+\DeclareUnicodeCharacter{1D554}{\ensuremath{\mathbb{c}}}
+\DeclareUnicodeCharacter{1D555}{\ensuremath{\mathbb{d}}}
+\DeclareUnicodeCharacter{1D556}{\ensuremath{\mathbb{e}}}
+\DeclareUnicodeCharacter{1D557}{\ensuremath{\mathbb{f}}}
+\DeclareUnicodeCharacter{1D558}{\ensuremath{\mathbb{g}}}
+\DeclareUnicodeCharacter{1D559}{\ensuremath{\mathbb{h}}}
+\DeclareUnicodeCharacter{1D55A}{\ensuremath{\mathbb{i}}}
+\DeclareUnicodeCharacter{1D55B}{\ensuremath{\mathbb{j}}}
+\DeclareUnicodeCharacter{1D55C}{\ensuremath{\mathbb{k}}}
+\DeclareUnicodeCharacter{1D55D}{\ensuremath{\mathbb{l}}}
+\DeclareUnicodeCharacter{1D55E}{\ensuremath{\mathbb{m}}}
+\DeclareUnicodeCharacter{1D55F}{\ensuremath{\mathbb{n}}}
+\DeclareUnicodeCharacter{1D56}{\ensuremath{^p}}
+\DeclareUnicodeCharacter{1D560}{\ensuremath{\mathbb{o}}}
+\DeclareUnicodeCharacter{1D561}{\ensuremath{\mathbb{p}}}
+\DeclareUnicodeCharacter{1D562}{\ensuremath{\mathbb{q}}}
+\DeclareUnicodeCharacter{1D563}{\ensuremath{\mathbb{r}}}
+\DeclareUnicodeCharacter{1D564}{\ensuremath{\mathbb{s}}}
+\DeclareUnicodeCharacter{1D565}{\ensuremath{\mathbb{t}}}
+\DeclareUnicodeCharacter{1D566}{\ensuremath{\mathbb{u}}}
+\DeclareUnicodeCharacter{1D567}{\ensuremath{\mathbb{v}}}
+\DeclareUnicodeCharacter{1D568}{\ensuremath{\mathbb{w}}}
+\DeclareUnicodeCharacter{1D569}{\ensuremath{\mathbb{x}}}
+\DeclareUnicodeCharacter{1D56A}{\ensuremath{\mathbb{y}}}
+\DeclareUnicodeCharacter{1D56B}{\ensuremath{\mathbb{z}}}
+\DeclareUnicodeCharacter{1D57}{\ensuremath{^t}}
+\DeclareUnicodeCharacter{1D58}{\ensuremath{^u}}
+\DeclareUnicodeCharacter{1D5B}{\ensuremath{^v}}
+\DeclareUnicodeCharacter{1D62}{\ensuremath{_i}}
+\DeclareUnicodeCharacter{1D629}{\ensuremath{\mathit{h}}}
+\DeclareUnicodeCharacter{1D63}{\ensuremath{_r}}
+\DeclareUnicodeCharacter{1D64}{\ensuremath{_u}}
+\DeclareUnicodeCharacter{1D65}{\ensuremath{_v}}
+\DeclareUnicodeCharacter{1D6E4}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{1D6E5}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{1D6F1}{\ensuremath{\Pi}}
+\DeclareUnicodeCharacter{1D6F4}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{1D6FA}{\ensuremath{\Omega}}
+\DeclareUnicodeCharacter{1D6FC}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{1D6FD}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{1D6FE}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{1D6FF}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{1D700}{\ensuremath{\varepsilon}}
+\DeclareUnicodeCharacter{1D701}{\ensuremath{\zeta}}
+\DeclareUnicodeCharacter{1D702}{\ensuremath{\eta}}
+\DeclareUnicodeCharacter{1D703}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{1D704}{\ensuremath{\iota}}
+\DeclareUnicodeCharacter{1D705}{\ensuremath{\kappa}}
+\DeclareUnicodeCharacter{1D706}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{1D707}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{1D708}{\ensuremath{\nu}}
+\DeclareUnicodeCharacter{1D709}{\ensuremath{\xi}}
+\DeclareUnicodeCharacter{1D70A}{\ensuremath{o}}
+\DeclareUnicodeCharacter{1D70B}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{1D70C}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{1D70D}{\ensuremath{\varsigma}}
+\DeclareUnicodeCharacter{1D70E}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{1D70F}{\ensuremath{\tau}}
+\DeclareUnicodeCharacter{1D710}{\ensuremath{\upsilon}}
+\DeclareUnicodeCharacter{1D711}{\ensuremath{\varphi}}
+\DeclareUnicodeCharacter{1D712}{\ensuremath{\chi}}
+\DeclareUnicodeCharacter{1D713}{\ensuremath{\psi}}
+\DeclareUnicodeCharacter{1D714}{\ensuremath{\omega}}
+\DeclareUnicodeCharacter{1D716}{\ensuremath{\epsilon}}
+\DeclareUnicodeCharacter{1D717}{\ensuremath{\vartheta}}
+\DeclareUnicodeCharacter{1D719}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{1D71A}{\ensuremath{\varrho}}
+\DeclareUnicodeCharacter{1D71B}{\ensuremath{\varpi}}
+\DeclareUnicodeCharacter{1D7D8}{\ensuremath{\mathbb{0}}}
+\DeclareUnicodeCharacter{1D7D9}{\ensuremath{\mathbb{1}}}
+\DeclareUnicodeCharacter{1D7DA}{\ensuremath{\mathbb{2}}}
+\DeclareUnicodeCharacter{1D7DB}{\ensuremath{\mathbb{3}}}
+\DeclareUnicodeCharacter{1D7DC}{\ensuremath{\mathbb{4}}}
+\DeclareUnicodeCharacter{1D7DD}{\ensuremath{\mathbb{5}}}
+\DeclareUnicodeCharacter{1D7DE}{\ensuremath{\mathbb{6}}}
+\DeclareUnicodeCharacter{1D7DF}{\ensuremath{\mathbb{7}}}
+\DeclareUnicodeCharacter{1D7E0}{\ensuremath{\mathbb{8}}}
+\DeclareUnicodeCharacter{1D7E1}{\ensuremath{\mathbb{9}}}
+\DeclareUnicodeCharacter{1D9C}{\ensuremath{^c}}
+\DeclareUnicodeCharacter{1DA0}{\ensuremath{^f}}
+\DeclareUnicodeCharacter{1DBB}{\ensuremath{^z}}
+\DeclareUnicodeCharacter{1F329}{\ensuremath{\lightning}}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2014}{---}
+\DeclareUnicodeCharacter{2016}{\textbardbl}
+\DeclareUnicodeCharacter{2018}{\textquoteleft}
+\DeclareUnicodeCharacter{2019}{\textquoteright}
+\DeclareUnicodeCharacter{201A}{\quotesinglbase}
+\DeclareUnicodeCharacter{201C}{\textquotedblleft}
+\DeclareUnicodeCharacter{201D}{\textquotedblright}
+\DeclareUnicodeCharacter{201E}{\quotedblbase}
+\DeclareUnicodeCharacter{2020}{\ensuremath{\dagger}}
+\DeclareUnicodeCharacter{2021}{\ddag}
+\DeclareUnicodeCharacter{2022}{\ensuremath{\bullet}}
+\DeclareUnicodeCharacter{2023}{\ensuremath{\RHD}}
+\DeclareUnicodeCharacter{2026}{\ensuremath{\ldots}}
+\DeclareUnicodeCharacter{202F}{\,}
+\DeclareUnicodeCharacter{2030}{\textperthousand}
+\DeclareUnicodeCharacter{2031}{\textpertenthousand}
+\DeclareUnicodeCharacter{2032}{\ensuremath{\prime}}
+\DeclareUnicodeCharacter{2033}{\ensuremath{''}}
+\DeclareUnicodeCharacter{2034}{\ensuremath{'''}}
+\DeclareUnicodeCharacter{2035}{\ensuremath{\backprime}}
+\DeclareUnicodeCharacter{2038}{\ifmmode\widehat{}\else\textasciicircum\fi}
+\DeclareUnicodeCharacter{2039}{\guilsinglleft}
+\DeclareUnicodeCharacter{203A}{\guilsinglright}
+\DeclareUnicodeCharacter{203B}{\textreferencemark}
+\DeclareUnicodeCharacter{203C}{{!\kern -.5ex!}}
+\DeclareUnicodeCharacter{203D}{\textinterrobang}
+\DeclareUnicodeCharacter{203E}{\ensuremath{\overline{0}}}
+\DeclareUnicodeCharacter{2042}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2045}{\textlquill}
+\DeclareUnicodeCharacter{2046}{\textrquill}
+\DeclareUnicodeCharacter{2047}{{?\kern -.5ex?}}
+\DeclareUnicodeCharacter{2048}{{?\kern -.5ex!}}
+\DeclareUnicodeCharacter{2049}{{!\kern -.5ex?}}
+\DeclareUnicodeCharacter{2052}{\textdiscount}
+\DeclareUnicodeCharacter{2062}{{}}
+\DeclareUnicodeCharacter{2070}{\ensuremath{^0}}
+\DeclareUnicodeCharacter{2071}{\ensuremath{^i}}
+\DeclareUnicodeCharacter{2074}{\ensuremath{^4}}
+\DeclareUnicodeCharacter{2075}{\ensuremath{^5}}
+\DeclareUnicodeCharacter{2076}{\ensuremath{^6}}
+\DeclareUnicodeCharacter{2077}{\ensuremath{^7}}
+\DeclareUnicodeCharacter{2078}{\ensuremath{^8}}
+\DeclareUnicodeCharacter{2079}{\ensuremath{^9}}
+\DeclareUnicodeCharacter{207A}{\ensuremath{^+}}
+\DeclareUnicodeCharacter{207B}{\ensuremath{^-}}
+\DeclareUnicodeCharacter{207C}{\ensuremath{^=}}
+\DeclareUnicodeCharacter{207D}{\ensuremath{^(}}
+\DeclareUnicodeCharacter{207E}{\ensuremath{^)}}
+\DeclareUnicodeCharacter{207F}{\ensuremath{^n}}
+\DeclareUnicodeCharacter{2080}{\ensuremath{_0}}
+\DeclareUnicodeCharacter{2081}{\ensuremath{_1}}
+\DeclareUnicodeCharacter{2082}{\ensuremath{_2}}
+\DeclareUnicodeCharacter{2083}{\ensuremath{_3}}
+\DeclareUnicodeCharacter{2084}{\ensuremath{_4}}
+\DeclareUnicodeCharacter{2085}{\ensuremath{_5}}
+\DeclareUnicodeCharacter{2086}{\ensuremath{_6}}
+\DeclareUnicodeCharacter{2087}{\ensuremath{_7}}
+\DeclareUnicodeCharacter{2088}{\ensuremath{_8}}
+\DeclareUnicodeCharacter{2089}{\ensuremath{_9}}
+\DeclareUnicodeCharacter{208A}{\ensuremath{_+}}
+\DeclareUnicodeCharacter{208B}{\ensuremath{_-}}
+\DeclareUnicodeCharacter{208C}{\ensuremath{_=}}
+\DeclareUnicodeCharacter{208D}{\ensuremath{_(}}
+\DeclareUnicodeCharacter{208E}{\ensuremath{_)}}
+\DeclareUnicodeCharacter{2090}{\ensuremath{_a}}
+\DeclareUnicodeCharacter{2091}{\ensuremath{_e}}
+\DeclareUnicodeCharacter{2092}{\ensuremath{_o}}
+\DeclareUnicodeCharacter{2093}{\ensuremath{_x}}
+\DeclareUnicodeCharacter{2095}{\ensuremath{_h}}
+\DeclareUnicodeCharacter{2096}{\ensuremath{_k}}
+\DeclareUnicodeCharacter{2097}{\ensuremath{_l}}
+\DeclareUnicodeCharacter{2098}{\ensuremath{_m}}
+\DeclareUnicodeCharacter{2099}{\ensuremath{_n}}
+\DeclareUnicodeCharacter{209A}{\ensuremath{_p}}
+\DeclareUnicodeCharacter{209B}{\ensuremath{_s}}
+\DeclareUnicodeCharacter{209C}{\ensuremath{_t}}
+\DeclareUnicodeCharacter{20AC}{\euro}
+\DeclareUnicodeCharacter{2102}{\ensuremath{\mathbb{C}}}
+\DeclareUnicodeCharacter{2107}{\ensuremath{\mathbb{E}}}
+\DeclareUnicodeCharacter{210A}{\ensuremath{\mathcal g}}
+\DeclareUnicodeCharacter{210B}{\ensuremath{\mathcal H}}
+\DeclareUnicodeCharacter{210C}{\ensuremath{\mathfrak H}}
+\DeclareUnicodeCharacter{210D}{\ensuremath{\mathbb{H}}}
+\DeclareUnicodeCharacter{210E}{\ensuremath{\mathit{h}}}
+\DeclareUnicodeCharacter{210F}{\ensuremath{\hbar}}
+\DeclareUnicodeCharacter{2110}{\ensuremath{\mathcal I}}
+\DeclareUnicodeCharacter{2111}{\ensuremath{\IM}}
+\DeclareUnicodeCharacter{2112}{\ensuremath{\mathcal L}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{2118}{\ensuremath{\wp}}
+\DeclareUnicodeCharacter{2119}{\ensuremath{\mathbb{P}}}
+\DeclareUnicodeCharacter{211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{211B}{\ensuremath{\mathscr{R}}}
+\DeclareUnicodeCharacter{211C}{\ensuremath{\Re}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2122}{\texttrademark}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2126}{\ensuremath{\Omega}}
+\DeclareUnicodeCharacter{2127}{\ensuremath{\mho}}
+\DeclareUnicodeCharacter{2128}{\ensuremath{\mathfrak Z}}
+\DeclareUnicodeCharacter{212A}{\ensuremath{\mathrm K}}
+\DeclareUnicodeCharacter{212B}{\ensuremath{\mathring{\mathrm A}}}
+\DeclareUnicodeCharacter{212C}{\ensuremath{\mathcal B}}
+\DeclareUnicodeCharacter{212D}{\ensuremath{\mathfrak C}}
+\DeclareUnicodeCharacter{212E}{\textestimated}
+\DeclareUnicodeCharacter{212F}{\ensuremath{\mathcal e}}
+\DeclareUnicodeCharacter{2130}{\ensuremath{\mathcal E}}
+\DeclareUnicodeCharacter{2131}{\ensuremath{\mathcal F}}
+\DeclareUnicodeCharacter{2132}{\ensuremath{\Finv}}
+\DeclareUnicodeCharacter{2133}{\ensuremath{\mathscr{M}}}
+\DeclareUnicodeCharacter{2135}{\ensuremath{\aleph}}
+\DeclareUnicodeCharacter{2136}{\ensuremath{\beth}}
+\DeclareUnicodeCharacter{2137}{\ensuremath{\gimel}}
+\DeclareUnicodeCharacter{2138}{\ensuremath{\daleth}}
+\DeclareUnicodeCharacter{213C}{\ensuremath{\mathbb{\pi}}}
+\DeclareUnicodeCharacter{213D}{\ensuremath{\mathbb{\gamma}}}
+\DeclareUnicodeCharacter{213E}{\ensuremath{\mathbb{\Pi}}}
+\DeclareUnicodeCharacter{213F}{\ensuremath{\mathbb{\Gamma}}}
+\DeclareUnicodeCharacter{2140}{\ensuremath{\mathbb{\Sigma}}}
+\DeclareUnicodeCharacter{2141}{\ensuremath{\Game}}
+\DeclareUnicodeCharacter{2144}{\ensuremath{Y}}
+\DeclareUnicodeCharacter{2146}{\ensuremath{\mathrm{d}}}
+\DeclareUnicodeCharacter{2148}{\ensuremath{\imath}}
+\DeclareUnicodeCharacter{2149}{\ensuremath{\jmath}}
+\DeclareUnicodeCharacter{214B}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2153}{\ensuremath{\frac{1}{3}}}
+\DeclareUnicodeCharacter{2154}{\ensuremath{\frac{2}{3}}}
+\DeclareUnicodeCharacter{2155}{\ensuremath{\frac{1}{5}}}
+\DeclareUnicodeCharacter{2156}{\ensuremath{\frac{2}{5}}}
+\DeclareUnicodeCharacter{2157}{\ensuremath{\frac{3}{5}}}
+\DeclareUnicodeCharacter{2158}{\ensuremath{\frac{4}{5}}}
+\DeclareUnicodeCharacter{2159}{\ensuremath{\frac{1}{6}}}
+\DeclareUnicodeCharacter{215A}{\ensuremath{\frac{5}{6}}}
+\DeclareUnicodeCharacter{215B}{\ensuremath{\frac{1}{8}}}
+\DeclareUnicodeCharacter{215D}{\ensuremath{\frac{5}{8}}}
+\DeclareUnicodeCharacter{215E}{\ensuremath{\frac{7}{8}}}
+\DeclareUnicodeCharacter{2190}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{2191}{\ensuremath{\uparrow}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
+\DeclareUnicodeCharacter{2193}{\ensuremath{\downarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{2195}{\ensuremath{\updownarrow}}
+\DeclareUnicodeCharacter{2196}{\ensuremath{\nwarrow}}
+\DeclareUnicodeCharacter{2197}{\ensuremath{\nearrow}}
+\DeclareUnicodeCharacter{2198}{\ensuremath{\searrow}}
+\DeclareUnicodeCharacter{2199}{\ensuremath{\swarrow}}
+\DeclareUnicodeCharacter{219A}{\ensuremath{\nleftarrow}}
+\DeclareUnicodeCharacter{219B}{\ensuremath{\nrightarrow}}
+\DeclareUnicodeCharacter{219E}{\ensuremath{\twoheadleftarrow}}
+\DeclareUnicodeCharacter{21A0}{\ensuremath{\twoheadrightarrow}}
+\DeclareUnicodeCharacter{21A2}{\ensuremath{\leftarrowtail}}
+\DeclareUnicodeCharacter{21A3}{\ensuremath{\rightarrowtail}}
+\DeclareUnicodeCharacter{21A4}{\ensuremath{\mapsfrom}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{21A9}{\ensuremath{\hookleftarrow}}
+\DeclareUnicodeCharacter{21AA}{\ensuremath{\hookrightarrow}}
+\DeclareUnicodeCharacter{21AB}{\ensuremath{\looparrowleft}}
+\DeclareUnicodeCharacter{21AC}{\ensuremath{\looparrowright}}
+\DeclareUnicodeCharacter{21AD}{\ensuremath{\leftrightsquigarrow}}
+\DeclareUnicodeCharacter{21AE}{\ensuremath{\nleftrightarrow}}
+\DeclareUnicodeCharacter{21AF}{\ensuremath{\lightning}}
+\DeclareUnicodeCharacter{21B0}{\ensuremath{\Lsh}}
+\DeclareUnicodeCharacter{21B1}{\ensuremath{\Rsh}}
+\DeclareUnicodeCharacter{21B6}{\ensuremath{\curvearrowleft}}
+\DeclareUnicodeCharacter{21B7}{\ensuremath{\curvearrowright}}
+\DeclareUnicodeCharacter{21BA}{\ensuremath{\circlearrowleft}}
+\DeclareUnicodeCharacter{21BB}{\ensuremath{\circlearrowright}}
+\DeclareUnicodeCharacter{21BC}{\ensuremath{\leftharpoonup}}
+\DeclareUnicodeCharacter{21BD}{\ensuremath{\leftharpoondown}}
+\DeclareUnicodeCharacter{21BE}{\ensuremath{\upharpoonright}}
+\DeclareUnicodeCharacter{21BF}{\ensuremath{\upharpoonleft}}
+\DeclareUnicodeCharacter{21C0}{\ensuremath{\rightharpoonup}}
+\DeclareUnicodeCharacter{21C1}{\ensuremath{\rightharpoondown}}
+\DeclareUnicodeCharacter{21C2}{\ensuremath{\downharpoonright}}
+\DeclareUnicodeCharacter{21C3}{\ensuremath{\downharpoonleft}}
+\DeclareUnicodeCharacter{21C4}{\ensuremath{\rightleftarrows}}
+\DeclareUnicodeCharacter{21C5}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{21C6}{\ensuremath{\leftrightarrows}}
+\DeclareUnicodeCharacter{21C7}{\ensuremath{\leftleftarrows}}
+\DeclareUnicodeCharacter{21C8}{\ensuremath{\upuparrows}}
+\DeclareUnicodeCharacter{21C9}{\ensuremath{\rightrightarrows}}
+\DeclareUnicodeCharacter{21CA}{\ensuremath{\downdownarrows}}
+\DeclareUnicodeCharacter{21CB}{\ensuremath{\leftrightharpoons}}
+\DeclareUnicodeCharacter{21CC}{\ensuremath{\rightleftharpoons}}
+\DeclareUnicodeCharacter{21CD}{\ensuremath{\nLeftarrow}}
+\DeclareUnicodeCharacter{21CE}{\ensuremath{\nLeftrightarrow}}
+\DeclareUnicodeCharacter{21CF}{\ensuremath{\nRightarrow}}
+\DeclareUnicodeCharacter{21D0}{\ensuremath{\Leftarrow}}
+\DeclareUnicodeCharacter{21D1}{\ensuremath{\Uparrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21D3}{\ensuremath{\Downarrow}}
+\DeclareUnicodeCharacter{21D4}{\ensuremath{\Leftrightarrow}}
+\DeclareUnicodeCharacter{21D5}{\ensuremath{\Updownarrow}}
+\DeclareUnicodeCharacter{21D6}{\ensuremath{\nwarrow}}
+\DeclareUnicodeCharacter{21D7}{\ensuremath{\nearrow}}
+\DeclareUnicodeCharacter{21D8}{\ensuremath{\searrow}}
+\DeclareUnicodeCharacter{21D9}{\ensuremath{\swarrow}}
+\DeclareUnicodeCharacter{21DA}{\ensuremath{\Lleftarrow}}
+\DeclareUnicodeCharacter{21DB}{\ensuremath{\Rrightarrow}}
+\DeclareUnicodeCharacter{21DC}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{21DD}{\ensuremath{\rightsquigarrow}}
+\DeclareUnicodeCharacter{21E0}{\ensuremath{\dashleftarrow}}
+\DeclareUnicodeCharacter{21E2}{\ensuremath{\dashrightarrow}}
+\DeclareUnicodeCharacter{21E4}{\ensuremath{\Leftarrow}}
+\DeclareUnicodeCharacter{21E5}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21F0}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{21FD}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{21FE}{\ensuremath{\rightarrow}}
+\DeclareUnicodeCharacter{21FF}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2201}{\ensuremath{\complement}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2204}{\ensuremath{\not\exists}}
+\DeclareUnicodeCharacter{2205}{\ensuremath{\varnothing}}
+\DeclareUnicodeCharacter{2207}{\ensuremath{\nabla}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{220B}{\ensuremath{\ni}}
+\DeclareUnicodeCharacter{220C}{\ensuremath{!\ni}}
+\DeclareUnicodeCharacter{220D}{\ensuremath{\bullet}}
+\DeclareUnicodeCharacter{220E}{{\tiny \ensuremath{\blacksquare}}}
+\DeclareUnicodeCharacter{220F}{\ensuremath{\prod}}
+\DeclareUnicodeCharacter{2210}{\ensuremath{\coprod}}
+\DeclareUnicodeCharacter{2211}{\ensuremath{\sum}}
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2213}{\ensuremath{\mp}}
+\DeclareUnicodeCharacter{2214}{\ensuremath{\dotplus}}
+\DeclareUnicodeCharacter{2215}{\ensuremath{/}}
+\DeclareUnicodeCharacter{2216}{\ensuremath{\smallsetminus}}
+\DeclareUnicodeCharacter{2217}{\ensuremath{\star}}
+\DeclareUnicodeCharacter{2218}{\ensuremath{\circ}}
+\DeclareUnicodeCharacter{2219}{\ensuremath{\bullet}}
+\DeclareUnicodeCharacter{221A}{\ensuremath{\sqrt{}}}
+\DeclareUnicodeCharacter{221B}{\ensuremath{\sqrt[3]{}}}
+\DeclareUnicodeCharacter{221C}{\ensuremath{\sqrt[4]{}}}
+\DeclareUnicodeCharacter{221D}{\ensuremath{\propto}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2220}{\ensuremath{\angle}}
+\DeclareUnicodeCharacter{2221}{\ensuremath{\measuredangle}}
+\DeclareUnicodeCharacter{2222}{\ensuremath{\sphericalangle}}
+\DeclareUnicodeCharacter{2223}{\ensuremath{\mid}}
+\DeclareUnicodeCharacter{2224}{\ensuremath{\nmid}}
+\DeclareUnicodeCharacter{2225}{\ensuremath{\parallel}}
+\DeclareUnicodeCharacter{2226}{\ensuremath{\nparallel}}
+\DeclareUnicodeCharacter{2227}{\ensuremath{\wedge}}
+\DeclareUnicodeCharacter{2228}{\ensuremath{\vee}}
+\DeclareUnicodeCharacter{2229}{\ensuremath{\cap}}
+\DeclareUnicodeCharacter{222A}{\ensuremath{\cup}}
+\DeclareUnicodeCharacter{222B}{\ensuremath{\int}}
+\DeclareUnicodeCharacter{222C}{\ensuremath{\iint}}
+\DeclareUnicodeCharacter{222D}{\ensuremath{\iiint}}
+\DeclareUnicodeCharacter{222E}{\ensuremath{\oint}}
+\DeclareUnicodeCharacter{222F}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2230}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2232}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2233}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2234}{\ensuremath{\therefore}}
+\DeclareUnicodeCharacter{2235}{\ensuremath{\because}}
+\DeclareUnicodeCharacter{2236}{:}
+\DeclareUnicodeCharacter{2237}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2238}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2239}{\ensuremath{\eqcolon}}
+\DeclareUnicodeCharacter{223C}{\ensuremath{\sim}}
+\DeclareUnicodeCharacter{223D}{\ensuremath{\backsim}}
+\DeclareUnicodeCharacter{223F}{\AC}
+\DeclareUnicodeCharacter{2240}{\ensuremath{\wr}}
+\DeclareUnicodeCharacter{2241}{\ensuremath{\nsim}}
+\DeclareUnicodeCharacter{2243}{\ensuremath{\simeq}}
+\DeclareUnicodeCharacter{2244}{\ensuremath{\not\simeq}}
+\DeclareUnicodeCharacter{2245}{\ensuremath{\cong}}
+\DeclareUnicodeCharacter{2247}{\ensuremath{\ncong}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{2249}{\ensuremath{\not\approx}}
+\DeclareUnicodeCharacter{224A}{\ensuremath{\approxeq}}
+\DeclareUnicodeCharacter{224D}{\ensuremath{\asymp}}
+\DeclareUnicodeCharacter{224E}{\ensuremath{\Bumpeq}}
+\DeclareUnicodeCharacter{224F}{\ensuremath{\bumpeq}}
+\DeclareUnicodeCharacter{2250}{\ensuremath{\doteq}}
+\DeclareUnicodeCharacter{2251}{\ensuremath{\doteqdot}}
+\DeclareUnicodeCharacter{2252}{\ensuremath{\fallingdotseq}}
+\DeclareUnicodeCharacter{2253}{\ensuremath{\risingdotseq}}
+\DeclareUnicodeCharacter{2254}{\ensuremath{\coloneqq}}
+\DeclareUnicodeCharacter{2255}{\ensuremath{\eqqcolon}}
+\DeclareUnicodeCharacter{2256}{\ensuremath{\eqcirc}}
+\DeclareUnicodeCharacter{2257}{\ensuremath{\circeq}}
+\DeclareUnicodeCharacter{2258}{\ensuremath{\stackrel{\frown}{=}}}
+\DeclareUnicodeCharacter{2259}{\ensuremath{\stackrel{\wedge}{=}}}
+\DeclareUnicodeCharacter{225A}{\ensuremath{\stackrel{\vee}{=}}}
+\DeclareUnicodeCharacter{225B}{\ensuremath{\stackrel{\star}{=}}}
+\DeclareUnicodeCharacter{225C}{\ensuremath{\triangleq}}
+\DeclareUnicodeCharacter{225D}{\ensuremath{\stackrel{\text{\tiny def}}{=}}}
+\DeclareUnicodeCharacter{225F}{\ensuremath{\stackrel{\text{\tiny ?}}{=}}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\ne}}
+\DeclareUnicodeCharacter{2261}{\ensuremath{\equiv}}
+\DeclareUnicodeCharacter{2262}{\ensuremath{\not\equiv}}
+\DeclareUnicodeCharacter{2263}{\ensuremath{\stackrel{=}{=}}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{2266}{\ensuremath{\leqq}}
+\DeclareUnicodeCharacter{2267}{\ensuremath{\geqq}}
+\DeclareUnicodeCharacter{2268}{\ensuremath{\lneqq}}
+\DeclareUnicodeCharacter{2269}{\ensuremath{\gneqq}}
+\DeclareUnicodeCharacter{226A}{\ensuremath{\ll}}
+\DeclareUnicodeCharacter{226B}{\ensuremath{\gg}}
+\DeclareUnicodeCharacter{226C}{\ensuremath{\between}}
+\DeclareUnicodeCharacter{226D}{\ensuremath{\not\asymp}}
+\DeclareUnicodeCharacter{226E}{\ensuremath{\nless}}
+\DeclareUnicodeCharacter{226F}{\ensuremath{\ngtr}}
+\DeclareUnicodeCharacter{2270}{\ensuremath{\nleq}}
+\DeclareUnicodeCharacter{2271}{\ensuremath{\ngeq}}
+\DeclareUnicodeCharacter{2272}{\ensuremath{\lesssim}}
+\DeclareUnicodeCharacter{2273}{\ensuremath{\gtrsim}}
+\DeclareUnicodeCharacter{2274}{\ensuremath{\not\lesssim}}
+\DeclareUnicodeCharacter{2275}{\ensuremath{\not\gtrsim}}
+\DeclareUnicodeCharacter{2276}{\ensuremath{\lessgtr}}
+\DeclareUnicodeCharacter{2277}{\ensuremath{\gtrless}}
+\DeclareUnicodeCharacter{2278}{\ensuremath{\not\lessgtr}}
+\DeclareUnicodeCharacter{2279}{\ensuremath{\not\gtrless}}
+\DeclareUnicodeCharacter{227A}{\ensuremath{\prec}}
+\DeclareUnicodeCharacter{227B}{\ensuremath{\succ}}
+\DeclareUnicodeCharacter{227C}{\ensuremath{\preccurlyeq}}
+\DeclareUnicodeCharacter{227D}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{227E}{\ensuremath{\precsim}}
+\DeclareUnicodeCharacter{227F}{\ensuremath{\succsim}}
+\DeclareUnicodeCharacter{2280}{\ensuremath{\nprec}}
+\DeclareUnicodeCharacter{2281}{\ensuremath{\nsucc}}
+\DeclareUnicodeCharacter{2282}{\ensuremath{\subset}}
+\DeclareUnicodeCharacter{2283}{\ensuremath{\supset}}
+\DeclareUnicodeCharacter{2284}{\ensuremath{\not\subset}}
+\DeclareUnicodeCharacter{2285}{\ensuremath{\not\supset}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{2287}{\ensuremath{\supseteq}}
+\DeclareUnicodeCharacter{2288}{\ensuremath{\nsubseteq}}
+\DeclareUnicodeCharacter{2289}{\ensuremath{\nsupseteq}}
+\DeclareUnicodeCharacter{228A}{\ensuremath{\subsetneq}}
+\DeclareUnicodeCharacter{228B}{\ensuremath{\supsetneq}}
+\DeclareUnicodeCharacter{228E}{\ensuremath{\uplus}}
+\DeclareUnicodeCharacter{228F}{\ensuremath{\sqsubset}}
+\DeclareUnicodeCharacter{2290}{\ensuremath{\sqsupset}}
+\DeclareUnicodeCharacter{2291}{\ensuremath{\sqsubseteq}}
+\DeclareUnicodeCharacter{2292}{\ensuremath{\sqsupseteq}}
+\DeclareUnicodeCharacter{2293}{\ensuremath{\sqcap}}
+\DeclareUnicodeCharacter{2294}{\ensuremath{\sqcup}}
+\DeclareUnicodeCharacter{2295}{\ensuremath{\oplus}}
+\DeclareUnicodeCharacter{2296}{\ensuremath{\ominus}}
+\DeclareUnicodeCharacter{2297}{\ensuremath{\otimes}}
+\DeclareUnicodeCharacter{2298}{\ensuremath{\oslash}}
+\DeclareUnicodeCharacter{2299}{\ensuremath{\odot}}
+\DeclareUnicodeCharacter{229A}{\ensuremath{\circledcirc}}
+\DeclareUnicodeCharacter{229B}{\ensuremath{\circledast}}
+\DeclareUnicodeCharacter{229D}{\ensuremath{\circleddash}}
+\DeclareUnicodeCharacter{229E}{\ensuremath{\boxplus}}
+\DeclareUnicodeCharacter{229F}{\ensuremath{\boxminus}}
+\DeclareUnicodeCharacter{22A0}{\ensuremath{\boxtimes}}
+\DeclareUnicodeCharacter{22A1}{\ensuremath{\boxdot}}
+\DeclareUnicodeCharacter{22A2}{\ensuremath{\vdash}}
+\DeclareUnicodeCharacter{22A3}{\ensuremath{\dashv}}
+\DeclareUnicodeCharacter{22A4}{\ensuremath{\top}}
+\DeclareUnicodeCharacter{22A5}{\ensuremath{\bot}}
+\DeclareUnicodeCharacter{22A6}{\ensuremath{\vdash}}
+\DeclareUnicodeCharacter{22A7}{\ensuremath{\models}}
+\DeclareUnicodeCharacter{22A9}{\ensuremath{\Vdash}}
+\DeclareUnicodeCharacter{22AA}{\ensuremath{\Vvdash}}
+\DeclareUnicodeCharacter{22AB}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{22AC}{\ensuremath{\not\vdash}}
+\DeclareUnicodeCharacter{22AD}{\ensuremath{\not\vDash}}
+\DeclareUnicodeCharacter{22AE}{\ensuremath{\not\Vdash}}
+\DeclareUnicodeCharacter{22AF}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{22B2}{\ensuremath{\triangleleft}}
+\DeclareUnicodeCharacter{22B3}{\ensuremath{\triangleright}}
+\DeclareUnicodeCharacter{22B4}{\ensuremath{\unlhd}}
+\DeclareUnicodeCharacter{22B5}{\ensuremath{\unrhd}}
+\DeclareUnicodeCharacter{22B8}{\ensuremath{\multimap}}
+\DeclareUnicodeCharacter{22BA}{\ensuremath{\intercal}}
+\DeclareUnicodeCharacter{22BB}{\ensuremath{\veebar}}
+\DeclareUnicodeCharacter{22BC}{\ensuremath{\barwedge}}
+\DeclareUnicodeCharacter{22C0}{\ensuremath{\bigwedge}}
+\DeclareUnicodeCharacter{22C1}{\ensuremath{\bigvee}}
+\DeclareUnicodeCharacter{22C2}{\ensuremath{\bigcap}}
+\DeclareUnicodeCharacter{22C3}{\ensuremath{\bigcup}}
+\DeclareUnicodeCharacter{22C4}{\ensuremath{\diamond}}
+\DeclareUnicodeCharacter{22C5}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{22C6}{\ensuremath{\star}}
+\DeclareUnicodeCharacter{22C7}{\ensuremath{\divideontimes}}
+\DeclareUnicodeCharacter{22C8}{\ensuremath{\bowtie}}
+\DeclareUnicodeCharacter{22C9}{\ensuremath{\ltimes}}
+\DeclareUnicodeCharacter{22CA}{\ensuremath{\rtimes}}
+\DeclareUnicodeCharacter{22CB}{\ensuremath{\leftthreetimes}}
+\DeclareUnicodeCharacter{22CC}{\ensuremath{\rightthreetimes}}
+\DeclareUnicodeCharacter{22CD}{\ensuremath{\backsimeq}}
+\DeclareUnicodeCharacter{22CE}{\ensuremath{\curlyvee}}
+\DeclareUnicodeCharacter{22CF}{\ensuremath{\curlywedge}}
+\DeclareUnicodeCharacter{22D0}{\ensuremath{\Subset}}
+\DeclareUnicodeCharacter{22D1}{\ensuremath{\Supset}}
+\DeclareUnicodeCharacter{22D2}{\ensuremath{\Cap}}
+\DeclareUnicodeCharacter{22D3}{\ensuremath{\Cup}}
+\DeclareUnicodeCharacter{22D4}{\ensuremath{\pitchfork}}
+\DeclareUnicodeCharacter{22D6}{\ensuremath{\lessdot}}
+\DeclareUnicodeCharacter{22D7}{\ensuremath{\gtrdot}}
+\DeclareUnicodeCharacter{22D8}{\ensuremath{\lll}}
+\DeclareUnicodeCharacter{22D9}{\ensuremath{\ggg}}
+\DeclareUnicodeCharacter{22DA}{\ensuremath{\lesseqgtr}}
+\DeclareUnicodeCharacter{22DB}{\ensuremath{\gtreqless}}
+\DeclareUnicodeCharacter{22DE}{\ensuremath{\curlyeqprec}}
+\DeclareUnicodeCharacter{22DF}{\ensuremath{\curlyeqsucc}}
+\DeclareUnicodeCharacter{22E0}{\ensuremath{\not\preceq}}
+\DeclareUnicodeCharacter{22E1}{\ensuremath{\not\succeq}}
+\DeclareUnicodeCharacter{22E2}{\ensuremath{\not\sqsubseteq}}
+\DeclareUnicodeCharacter{22E3}{\ensuremath{\not\sqsupseteq}}
+\DeclareUnicodeCharacter{22E4}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{22E5}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{22E6}{\ensuremath{\lnsim}}
+\DeclareUnicodeCharacter{22E7}{\ensuremath{\gnsim}}
+\DeclareUnicodeCharacter{22E8}{\ensuremath{\precnsim}}
+\DeclareUnicodeCharacter{22E9}{\ensuremath{\succnsim}}
+\DeclareUnicodeCharacter{22EA}{\ensuremath{\not\triangleleft}}
+\DeclareUnicodeCharacter{22EB}{\ensuremath{\not\triangleright}}
+\DeclareUnicodeCharacter{22EC}{\ensuremath{\not\trianglelefteq}}
+\DeclareUnicodeCharacter{22ED}{\ensuremath{\not\trianglerighteq}}
+\DeclareUnicodeCharacter{22EE}{\ensuremath{\vdots}}
+\DeclareUnicodeCharacter{22EF}{\ensuremath{\cdots}}
+\DeclareUnicodeCharacter{22F0}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{22F1}{\ensuremath{\ddots}}
+\DeclareUnicodeCharacter{2300}{\ensuremath{\diameter}}
+\DeclareUnicodeCharacter{2308}{\ensuremath{\lceil}}
+\DeclareUnicodeCharacter{2309}{\ensuremath{\rceil}}
+\DeclareUnicodeCharacter{230A}{\ensuremath{\lfloor}}
+\DeclareUnicodeCharacter{230B}{\ensuremath{\rfloor}}
+\DeclareUnicodeCharacter{2322}{\ensuremath{\frown}}
+\DeclareUnicodeCharacter{2323}{\ensuremath{\smile}}
+\DeclareUnicodeCharacter{2329}{\ensuremath{\langle}}
+\DeclareUnicodeCharacter{232A}{\ensuremath{\rangle}}
+\DeclareUnicodeCharacter{23CE}{\ensuremath{\hookleftarrow}}
+\DeclareUnicodeCharacter{2460}{\ensuremath{\text{1}}}
+\DeclareUnicodeCharacter{2461}{\ensuremath{\text{2}}}
+\DeclareUnicodeCharacter{2462}{\ensuremath{\text{3}}}
+\DeclareUnicodeCharacter{2463}{\ensuremath{\text{4}}}
+\DeclareUnicodeCharacter{2464}{\ensuremath{\text{5}}}
+\DeclareUnicodeCharacter{2465}{\ensuremath{\text{6}}}
+\DeclareUnicodeCharacter{2466}{\ensuremath{\text{7}}}
+\DeclareUnicodeCharacter{2467}{\ensuremath{\text{8}}}
+\DeclareUnicodeCharacter{2468}{\ensuremath{\text{9}}}
+\DeclareUnicodeCharacter{25A1}{\ensuremath{\square}}
+\DeclareUnicodeCharacter{25B3}{\ensuremath{\triangle}}
+\DeclareUnicodeCharacter{25C5}{\ensuremath{\triangleleft}}
+\DeclareUnicodeCharacter{2610}{\fbox{\ensuremath{\phantom{{\checkmark}}}}}
+\DeclareUnicodeCharacter{2611}{\fbox{\ensuremath{\checkmark}}}
+\DeclareUnicodeCharacter{2615}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2621}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2627}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2639}{\ensuremath{\frownie}}
+\DeclareUnicodeCharacter{263A}{\ensuremath{\smiley}}
+\DeclareUnicodeCharacter{2660}{\ensuremath{\spadesuit}}
+\DeclareUnicodeCharacter{2661}{\ensuremath{\heartsuit}}
+\DeclareUnicodeCharacter{2662}{\ensuremath{\diamondsuit}}
+\DeclareUnicodeCharacter{2663}{\ensuremath{\clubsuit}}
+\DeclareUnicodeCharacter{266D}{\ensuremath{\flat}}
+\DeclareUnicodeCharacter{266E}{\ensuremath{\natural}}
+\DeclareUnicodeCharacter{266F}{\ensuremath{\sharp}}
+\DeclareUnicodeCharacter{26A0}{\ensuremath{\lower .25ex\hbox{\Large $\triangle$\hskip -1.25ex}!\;\,}}
+\DeclareUnicodeCharacter{2713}{\ensuremath{\checkmark}}
+\DeclareUnicodeCharacter{27C2}{\ensuremath{\perp}}
+\DeclareUnicodeCharacter{27E6}{\ensuremath{[}}
+\DeclareUnicodeCharacter{27E7}{\ensuremath{]}}
+\DeclareUnicodeCharacter{27E8}{\ensuremath{\langle}}
+\DeclareUnicodeCharacter{27E9}{\ensuremath{\rangle}}
+\DeclareUnicodeCharacter{27EA}{\ensuremath{\llangle}}
+\DeclareUnicodeCharacter{27EB}{\ensuremath{\rrangle}}
+\DeclareUnicodeCharacter{27F5}{\ensuremath{\longleftarrow}}
+\DeclareUnicodeCharacter{27F6}{\ensuremath{\longrightarrow}}
+\DeclareUnicodeCharacter{2983}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2984}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2985}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2986}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2987}{\ensuremath{(}}
+\DeclareUnicodeCharacter{2988}{\ensuremath{)}}
+\DeclareUnicodeCharacter{29F5}{\ensuremath{\setminus}}
+\DeclareUnicodeCharacter{2A00}{\ensuremath{\bigodot}}
+\DeclareUnicodeCharacter{2A01}{\ensuremath{\bigoplus}}
+\DeclareUnicodeCharacter{2A02}{\ensuremath{\bigotimes}}
+\DeclareUnicodeCharacter{2A05}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2A06}{\ensuremath{\bigsqcup}}
+\DeclareUnicodeCharacter{2A0C}{\ensuremath{\iiiint}}
+\DeclareUnicodeCharacter{2A1D}{\ensuremath{\Join}}
+\DeclareUnicodeCharacter{2A3F}{\ensuremath{\amalg}}
+\DeclareUnicodeCharacter{2A7D}{\ensuremath{\leqslant}}
+\DeclareUnicodeCharacter{2A7E}{\ensuremath{\geqslant}}
+\DeclareUnicodeCharacter{2AA8}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2AA9}{\LOCALunknownchar}
+\DeclareUnicodeCharacter{2AAF}{\ensuremath{\preceq}}
+\DeclareUnicodeCharacter{2AB0}{\ensuremath{\succeq}}
+\DeclareUnicodeCharacter{2C7C}{\ensuremath{_j}}
+\DeclareUnicodeCharacter{2E18}{\textinterrobangdown}
+\DeclareUnicodeCharacter{301A}{\ensuremath{[}}
+\DeclareUnicodeCharacter{301B}{\ensuremath{]}}
+\DeclareUnicodeCharacter{33D1}{\ensuremath{\ln}}
+\DeclareUnicodeCharacter{33D2}{\ensuremath{\log}}
+\DeclareUnicodeCharacter{D7B0}{\LOCALunknownchar}
+\fi
+
+% -----------------------------------------------------------------------------
+% CONFIGURACIONES DE PÁGINA
+% -----------------------------------------------------------------------------
+\newcommand{\templatePagecfg}{
+	
+	% Se define el punto decimal
+	\ifthenelse{\equal{\pointdecimal}{true}}{
+		\decimalpoint}{
+	}
+	
+	% Configuración de estilo de página
+	\setpagemargincm{\pagemarginleft}{\pagemargintop}{\pagemarginright}{\pagemarginbottom}
+	\ifthenelse{\equal{\hfstyle}{style1}}{
+		\pagestyle{empty}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style2}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[L]{\textcolor{\hftextcolor}{\small \headertitle}}
+		\fancyfoot[C]{\textcolor{\hftextcolor}{\small \name}}
+		\fancyfoot[R]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style3}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[L]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style4}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[C]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style5}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[R]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style6}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[L]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0.5pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style7}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[C]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0.5pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style8}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[R]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0.5pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style9}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[L]{\textcolor{\hftextcolor}{\small \name}}
+		\fancyfoot[R]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0.5pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style10}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[L]{\textcolor{\hftextcolor}{\small \name}}
+		\fancyfoot[R]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}{
+	\ifthenelse{\equal{\hfstyle}{style11}}{
+		\pagestyle{fancy} \fancyhf{}
+		\fancyfoot[L]{\textcolor{\hftextcolor}{\small \name}}
+		\fancyfoot[C]{\textcolor{\hftextcolor}{\small \headertitle}}
+		\fancyfoot[R]{\textcolor{\hftextcolor}{\small \thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}{
+		\throwbadconfigondoc{Estilo de header-footer incorrecto}{\hfstyle}{style1..style11}}}}}}}}}}}
+	}
+	
+	% Escribe el encabezado
+	\writeheader
+	
+	% Estilo de título de secciones
+	\sectionfont{\color{\titlecolor} \fontsizetitle \styletitle \selectfont}
+	
+}
